@@ -84,7 +84,7 @@ const insertMotorista =  async function(dadosMotorista) {
     
     try {
 
-     let sql  = `insert into tbl_motorista(nome,data_nascimento, cpf, telefone, email, senha, ) values ('${dadosMotorista.nome}', '${dadosMotorista.data_nascimento},  '${dadosMotorista.cpf}', '${dadosMotorista.telefone}', '${dadosMotorista.email}',  '${dadosMotorista.senha}' ')`
+     let sql  = `insert into tbl_motorista(nome,data_nascimento, cpf, telefone, email, senha, ) values ('${dadosMotorista.nome}', '${dadosMotorista.data_nascimento},  '${dadosMotorista.cpf}', '${dadosMotorista.telefone}', '${dadosMotorista.email}',  '${dadosMotorista.senha}')`
             
         // Executa o script SQL no banco de dados | Devemos usar execute e não query!
         // Execute deve ser utilizado para insert, update e delete, onde o banco não devolve dados
@@ -109,7 +109,7 @@ const updateMotorista =  async function(id, dadosMotorista) {
 
         let sql;
            
-        sql = `update tbl_motorista set nome = '${dadosMotorista.nome}',  cpf = '${dadosMotorista.cpf}',  email = '${dadosMotorista.email}',  telefone = '${dadosMotorista.telefone}', senha = '${dadosMotorista.senha}', data_nascimento ='${dadosMotorista.data_nascimento}' where id = ${id}`
+        sql = `update tbl_motorista set nome = '${dadosMotorista.nome}', '${dadosMotorista.data_nascimento}', cpf = '${dadosMotorista.cpf}', telefone = '${dadosMotorista.telefone}',  email = '${dadosMotorista.email}', senha = '${dadosMotorista.senha}' where id = ${id}`
               
            // Executa o script SQL no banco de dados | Devemos usar execute e não query!
            // Execute deve ser utilizado para insert, update e delete, onde o banco não devolve dados
