@@ -81,23 +81,21 @@ const deleteEmpresaById = async function(id){
   }
 }
 const insertEmpresa =  async function(dadosEmpresa) {
-    
     try {
 
-     let sql  = `insert into tbl_empresa(nome, telefone, cnpj, razão_social,  cep, email, senha) values ('${dadosEmpresa.nome}', '${dadosEmpresa.telefone}', '${dadosEmpresa.cnpj}', '${dadosEmpresa.razao_social}', '${dadosEmpresa.cep},  '${dadosEmpresa.email}', '${dadosEmpresa.senha}')`
-            
+     let sql  = `insert into tbl_empresa(nome, telefone, cnpj, razaoSocial, cep, email, senha) values ('${dadosEmpresa.nome}', '${dadosEmpresa.telefone}', '${dadosEmpresa.cnpj}', '${dadosEmpresa.razaoSocial}', '${dadosEmpresa.cep}', '${dadosEmpresa.email}', '${dadosEmpresa.senha}' )`
         // Executa o script SQL no banco de dados | Devemos usar execute e não query!
         // Execute deve ser utilizado para insert, update e delete, onde o banco não devolve dados
         let result = await prisma.$executeRawUnsafe(sql);
 
         // Validação para verificar se o insert funcionou no banco de dados
-        if(result )
+        if(result)
             return true;
         else
             return false;
 
     } catch (error) {
-
+        console.log(error)
         return false;
         
     }

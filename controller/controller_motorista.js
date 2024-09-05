@@ -22,7 +22,7 @@ const getListarMotoristas = async function(){
     }else{
     
     // Chama a função do DAO para buscar os dados do banco de dados
-    let dadosMotorista = await motoristaDAO.selectAllMotors();
+    let dadosMotorista = await motoristaDAO.selectAllDrivers();
 
     // Verifica se existem dados retornados do DAO
     if(dadosMotorista){
@@ -42,6 +42,7 @@ const getListarMotoristas = async function(){
             return message.ERROR_INTERNAL_SERVER_DB // 500
 
     }
+}
 }
 }
 const getBuscarMotoristasNome = async function (nome){
@@ -68,6 +69,7 @@ const getBuscarMotoristasNome = async function (nome){
         return message.ERROR_INTERNAL_SERVER
     }
 }
+
 
 const getListarMotoristaById = async function (id){
    
@@ -104,7 +106,8 @@ const getListarMotoristaById = async function (id){
 
 
 }
-const setInserirNovaEmpresa = async (dadosMotorista, contentType) => {
+
+const setInserirNovoMotorista = async (dadosMotorista, contentType) => {
 
     try{
 
@@ -117,7 +120,7 @@ const setInserirNovaEmpresa = async (dadosMotorista, contentType) => {
     let resultDadosMotorista = {}
 
     // Validação de campos obrigatórios e consistência de dados
-    if( dadosMotorista.nome == ''                       || dadosMotorista.nome == undefined              || dadosMotorista.nome.length > 64             ||
+    if( dadosMotorista.nome == ''                       || dadosMotorista.nome == undefined              || dadosMotorista.nome.length > 256             ||
         dadosMotorista.email == ''            || dadosMotorista.email == undefined            || dadosMotorista.email.length > 256       || 
         dadosMotorista.telefone == ''                       || dadosMotorista.telefone == undefined           ||dadosMotorista.telefone.length > 11           || 
         dadosMotorista.cnpj == ''                  || dadosMotorista.cnpj == undefined   ||dadosMotorista.cnpj.length > 14         || 
@@ -158,10 +161,12 @@ const setInserirNovaEmpresa = async (dadosMotorista, contentType) => {
         return message.ERROR_CONTENT_TYPE // 415 Erro no content type
     }
 }catch(error){
+    console.log(error)
     return message.ERROR_INTERNAL_SERVER // 500 Erro na camada de aplicação
 }
      
 }
+
 
 const setUpdateMotorista = async function(id, contentType, dadosMotorista){
     try{
@@ -224,12 +229,12 @@ const setUpdateMotorista = async function(id, contentType, dadosMotorista){
 
 
 
-}
+
 
 module.exports = {
     getListarMotoristas,
     getListarMotoristaById,
     getBuscarMotoristasNome,
-    setInserirNovaEmpresa,
+    setInserirNovoMotorista,
     setUpdateMotorista
 }

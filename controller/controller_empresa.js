@@ -8,6 +8,7 @@ const message = require('../modulo/config.js')
 
 // Import do arquivo DAO para manipular dados do banco de dados
 const empresaDAO = require('../model/DAO/empresa.js');
+const e = require('express');
 
 
 
@@ -44,6 +45,7 @@ const getListarEmpresas = async function(){
     }
 }
 }
+}
 const getBuscarEmpresaNome = async function (nome){
     try {
         
@@ -65,6 +67,34 @@ const getBuscarEmpresaNome = async function (nome){
             return message.ERROR_INTERNAL_SERVER_DB
         }
     } catch (error) {
+        return message.ERROR_INTERNAL_SERVER
+    }
+}
+const setDeleteEmpresa = async function(id){
+    try {
+        
+        let idEmpresa = id;
+
+        if(idEmpresa == '' || idEmpresa == undefined || isNaN(idEmpresa)){
+            return message.ERROR_INVALID_ID;
+        }else{
+            let chamarConst = await empresaDAO.selectEmpresasById(idEmpresa)
+
+            if(chamarConst.length > 0){
+                let dadosEmpresa = await empresaDAO.deleteEmpresaById(id)
+
+                if(dadosEmpresa){
+                    return message.SUCESS_DELETED_ITEM
+                }else {
+                    return message.ERROR_INTERNAL_SERVER_DB
+                }
+            
+        }else {
+            return message.ERROR_NOT_FOUND
+        }
+    }
+    } catch (error) {
+        console.log(error)
         return message.ERROR_INTERNAL_SERVER
     }
 }
@@ -106,35 +136,36 @@ const getListarEmpresaById = async function (id){
 }
 const setInserirNovaEmpresa = async (dadosEmpresa, contentType) => {
 
+    
+
     try{
 
    
     if(String(contentType).toLowerCase() == 'application/json'){
-
     
-
     // Cria a variável json
     let resultDadosEmpresa = {}
 
     // Validação de campos obrigatórios e consistência de dados
-    if( dadosEmpresa.nome == ''                       || dadosEmpresa.nome == undefined              || dadosEmpresa.nome.length > 64             ||
-        dadosEmpresa.telefone == ''                       || dadosEmpresa.telefone == undefined           ||dadosEmpresa.telefone.length > 11           || 
-        dadosEmpresa.cnpj == ''                  || dadosEmpresa.cnpj == undefined   ||dadosEmpresa.cnpj.length > 14         || 
-        dadosEmpresa.razao_social == ''                    || dadosEmpresa.razao_social == undefined     ||    dadosEmpresa.razao_social.length > 256        || 
-        dadosEmpresa.cep == ''           || dadosEmpresa.cep == undefined     ||    dadosEmpresa.cep.length > 1  ||
+    if( dadosEmpresa.nome == ''                       || dadosEmpresa.nome == undefined              || dadosEmpresa.nome.length > 256             ||
+        dadosEmpresa.telefone == ''                       || dadosEmpresa.telefone == undefined           ||dadosEmpresa.telefone.length > 256           || 
+        dadosEmpresa.cnpj == ''                  || dadosEmpresa.cnpj == undefined   ||dadosEmpresa.cnpj.length > 256         || 
+        dadosEmpresa.razaoSocial == ''                    || dadosEmpresa.razaoSocial == undefined     ||    dadosEmpresa.razaoSocial.length > 256        || 
+        dadosEmpresa.cep == ''           || dadosEmpresa.cep == undefined     ||    dadosEmpresa.cep.length > 256  ||
         dadosEmpresa.email == ''            || dadosEmpresa.email == undefined            || dadosEmpresa.email.length > 256       || 
-        dadosEmpresa.senha == ''         || dadosEmpresa.senha == undefined   || dadosEmpresa.senha.length > 8
+        dadosEmpresa.senha == ''         || dadosEmpresa.senha == undefined   || dadosEmpresa.senha.length > 256
          
         
     ){
+        
         return message.ERROR_REQUIRED_FIELDS // 400 Campos obrigatórios / Incorretos
      }else{
-   
+        
         // Encaminha os dados para o DAO, inserir no Banco de Dados
         let novaEmpresa = await empresaDAO.insertEmpresa(dadosEmpresa);
-
+        
         let idSelect = await empresaDAO.selectIdEmpresa();
-
+        
         dadosEmpresa.id = Number (idSelect[0].id)
         
         // Validação de inserção de dados no banco de dados 
@@ -146,8 +177,10 @@ const setInserirNovaEmpresa = async (dadosEmpresa, contentType) => {
             resultDadosEmpresa.status_code = message.SUCESS_CREATED_ITEM.status_code;
             resultDadosEmpresa.message = message.SUCESS_CREATED_ITEM.message;
             resultDadosEmpresa.empresa = dadosEmpresa;
+            console.log(dadosEmpresa)
 
-            return resultDadosEmpresa; // 201
+            return resultDadosEmpresa;
+     // 201
         } else{
             return message.ERROR_INTERNAL_SERVER_DB; // 500 Erro na camada do DAO (Banco)
             
@@ -158,6 +191,7 @@ const setInserirNovaEmpresa = async (dadosEmpresa, contentType) => {
         return message.ERROR_CONTENT_TYPE // 415 Erro no content type
     }
 }catch(error){
+    console.log(error)
     return message.ERROR_INTERNAL_SERVER // 500 Erro na camada de aplicação
 }
      
@@ -226,12 +260,14 @@ const setUpdateEMPRESA = async function(id, contentType, dadosEmpresa){
 
 
 
-}
+
 
 module.exports = {
     getListarEmpresas,
+    getBuscarEmpresaNome,
     getListarEmpresaById,
     getBuscarEmpresaNome,
     setInserirNovaEmpresa,
-    setUpdateEMPRESA
+    setUpdateEMPRESA,
+    setDeleteEmpresa
 }
