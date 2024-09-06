@@ -125,17 +125,20 @@ app.get('/v1/transportaweb/motoristas', cors(), async function(request,response,
     }
 });
 
-app.post('/v1/transportaweb/insertmotorista', cors(), bodyParserJSON, async function(request,response, next){
-    let idMotorista = request.params.id
-    let contentType = request.headers['content-type']
-    let dadosBody = request.body
+app.post('/v1/transportaweb/insertmotorista', cors(), bodyParserJSON, async function(request, response,next){
 
-    let dadosMotorista = await controllerMotorista.setInserirNovoMotorista(idMotorista, contentType, dadosBody);
+    // Recebe o content-type da requisição (API deve receber application/json )
+   let contentType = request.headers['content-type'];
 
-    response.status(dadosMotorista.status_code);
-    response.json(dadosMotorista)
+   // Recebe os dados encaminhados na requisição do body (JSON)
+   let dadosBody = request.body;
+   
+   // Encaminha os dados da requisição para a controller enviar para o banco de dados
+   let resultDados = await controllerMotorista.setInserirNovoMotorista(dadosBody, contentType);
+
+   response.status(resultDados.status_code);
+   response.json(resultDados);
 })
-
 
 app.listen(8080, function(){
     console.log('Tá funcionando, testa aí');

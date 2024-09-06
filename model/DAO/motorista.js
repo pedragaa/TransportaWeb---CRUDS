@@ -84,7 +84,7 @@ const insertMotorista =  async function(dadosMotorista) {
     
     try {
 
-     let sql  = `insert into tbl_motorista(nome, data_nascimento, cpf, telefone, email, senha, ) values ('${dadosMotorista.nome}', '${dadosMotorista.data_nascimento},  '${dadosMotorista.cpf}', '${dadosMotorista.telefone}', '${dadosMotorista.email}',  '${dadosMotorista.senha}')`
+     let sql  = `insert into tbl_motorista( nome, data_nascimento, cpf, telefone, email, senha ) values ('${dadosMotorista.nome}', '${dadosMotorista.data_nascimento}',  '${dadosMotorista.cpf}', '${dadosMotorista.telefone}', '${dadosMotorista.email}',  '${dadosMotorista.senha}' )`
             
         // Executa o script SQL no banco de dados | Devemos usar execute e não query!
         // Execute deve ser utilizado para insert, update e delete, onde o banco não devolve dados
@@ -97,7 +97,7 @@ const insertMotorista =  async function(dadosMotorista) {
             return false;
 
     } catch (error) {
-
+        console.log(error)
         return false;
         
     }

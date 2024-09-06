@@ -120,13 +120,12 @@ const setInserirNovoMotorista = async (dadosMotorista, contentType) => {
     let resultDadosMotorista = {}
 
     // Validação de campos obrigatórios e consistência de dados
-    if( dadosMotorista.nome == ''                       || dadosMotorista.nome == undefined              || dadosMotorista.nome.length > 256             ||
-        dadosMotorista.email == ''            || dadosMotorista.email == undefined            || dadosMotorista.email.length > 256       || 
-        dadosMotorista.telefone == ''                       || dadosMotorista.telefone == undefined           ||dadosMotorista.telefone.length > 11           || 
-        dadosMotorista.cnpj == ''                  || dadosMotorista.cnpj == undefined   ||dadosMotorista.cnpj.length > 14         || 
-        dadosMotorista.razao_social == ''                    || dadosMotorista.razao_social == undefined     ||    dadosMotorista.razao_social.length > 256        || 
-        dadosMotorista.cep == ''           || dadosMotorista.cep == undefined     ||    dadosMotorista.cep.length > 1  ||
-        dadosMotorista.senha == ''         || dadosMotorista.senha == undefined   || dadosMotorista.senha.length > 8
+    if( dadosMotorista.nome == ''                       || dadosMotorista.nome == undefined             || dadosMotorista.nome.length > 256             ||
+        dadosMotorista.data_nascimento == ''            || dadosMotorista.data_nascimento == undefined  || dadosMotorista.data_nascimento.length > 10 || 
+        dadosMotorista.telefone == ''                   || dadosMotorista.telefone == undefined         || dadosMotorista.telefone.length > 11      || 
+        dadosMotorista.cpf == ''                        || dadosMotorista.cpf == undefined              || dadosMotorista.cpf.length > 256         || 
+        dadosMotorista.email == ''                      || dadosMotorista.email == undefined            || dadosMotorista.email.length > 256       || 
+        dadosMotorista.senha == ''                      || dadosMotorista.senha == undefined            || dadosMotorista.senha.length > 256
          
         
     ){

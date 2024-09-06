@@ -26,4 +26,4 @@ model tbl_motorista {
   telefone        String   @db.VarChar(13)
   email           String   @db.VarChar(64)
   senha           String   @db.VarChar(24)
- }
+}
