@@ -37,6 +37,7 @@ const bodyParserJSON = bodyParser.json();
 
     const controllerEmpresa = require('./controller/controller_empresa');
     const controllerMotorista = require('./controller/controller_motorista')
+    const controllerUsuarios = require('./controller/controller_usuarios')
 
 
 // ************************************************************************************************* //
@@ -139,6 +140,36 @@ app.post('/v1/transportaweb/insertmotorista', cors(), bodyParserJSON, async func
    response.status(resultDados.status_code);
    response.json(resultDados);
 })
+
+
+
+app.delete('/v1/transportaweb/deletemotorista/:id', cors(), async function(request, response, next){
+
+    let idMotorista = request.params.id
+
+    let resultDados = await controllerMotorista.se(idMotorista);
+
+    response.status(resultDados.status_code);
+    response.json(resultDados);
+})
+
+app.get('/v1/transportaweb/usuarios', cors(), async function(request,response,next){
+    
+    // Chama a função para retornar os dados do filme
+    let dadosUsuarios = await controllerUsuarios.getListarUsuarios();
+
+    // Validação para verificar se existem dados
+    if(dadosUsuarios){
+        response.json(dadosUsuarios)
+        response.status(200);
+    }else{
+        response.json({message: 'Nenhum registro encontrado'})
+        response.status()
+    }
+});
+
+
+
 
 app.listen(8080, function(){
     console.log('Tá funcionando, testa aí');

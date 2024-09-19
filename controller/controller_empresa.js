@@ -152,6 +152,7 @@ const setInserirNovaEmpresa = async (dadosEmpresa, contentType) => {
         dadosEmpresa.cnpj == ''                  || dadosEmpresa.cnpj == undefined   ||dadosEmpresa.cnpj.length > 256         || 
         dadosEmpresa.razaoSocial == ''                    || dadosEmpresa.razaoSocial == undefined     ||    dadosEmpresa.razaoSocial.length > 256        || 
         dadosEmpresa.cep == ''           || dadosEmpresa.cep == undefined     ||    dadosEmpresa.cep.length > 256  ||
+        dadosEmpresa.img == ''           || dadosEmpresa.img == undefined     ||    dadosEmpresa.img.length > 65000  ||
         dadosEmpresa.email == ''            || dadosEmpresa.email == undefined            || dadosEmpresa.email.length > 256       || 
         dadosEmpresa.senha == ''         || dadosEmpresa.senha == undefined   || dadosEmpresa.senha.length > 256
          
@@ -214,8 +215,9 @@ const setUpdateEMPRESA = async function(id, contentType, dadosEmpresa){
            if( dadosEmpresa.nome == ''                       || dadosEmpresa.nome == undefined              || dadosEmpresa.nome.length > 64             ||
            dadosEmpresa.telefone == ''                       || dadosEmpresa.telefone == undefined           ||dadosEmpresa.telefone.length > 11           || 
            dadosEmpresa.cnpj == ''                  || dadosEmpresa.cnpj == undefined   ||dadosEmpresa.cnpj.length > 14         || 
-           dadosEmpresa.razao_social == ''                    || dadosEmpresa.razao_social == undefined     ||    dadosEmpresa.razao_social.length > 256        || 
-           dadosEmpresa.cep == ''           || dadosEmpresa.cep == undefined     ||    dadosEmpresa.cep.length > 1  ||
+           dadosEmpresa.razaoSocial == ''                    || dadosEmpresa.razaoSocial == undefined     ||    dadosEmpresa.razaoSocial.length > 256        || 
+           dadosEmpresa.cep == ''           || dadosEmpresa.cep == undefined     ||    dadosEmpresa.cep.length > 20  ||
+           dadosEmpresa.img == ''           || dadosEmpresa.img == undefined     ||    dadosEmpresa.img.length > 65000  ||
            dadosEmpresa.email == ''            || dadosEmpresa.email == undefined            || dadosEmpresa.email.length > 256       || 
            dadosEmpresa.senha == ''         || dadosEmpresa.senha == undefined   || dadosEmpresa.senha.length > 8
             
@@ -254,6 +256,7 @@ const setUpdateEMPRESA = async function(id, contentType, dadosEmpresa){
         }
 
     } catch (error) {
+        console.log(error)
         return message.ERROR_INTERNAL_SERVER
     }
 }
