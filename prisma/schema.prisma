@@ -7,23 +7,3 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model tbl_empresa {
-  id          Int    @id @default(autoincrement())
-  nome        String @db.VarChar(64)
-  telefone    String @db.VarChar(13)
-  cnpj        String @db.VarChar(18)
-  razaoSocial String @db.VarChar(64)
-  cep         String @db.VarChar(9)
-  email       String @db.VarChar(50)
-  senha       String @db.VarChar(30)
-}
-
-model tbl_motorista {
-  id              Int      @id @default(autoincrement())
-  nome            String   @db.VarChar(64)
-  data_nascimento DateTime @db.Date
-  cpf             String   @db.VarChar(14)
-  telefone        String   @db.VarChar(13)
-  email           String   @db.VarChar(64)
-  senha           String   @db.VarChar(24)
-}
