@@ -27,7 +27,7 @@ VALUES
 ('José Rocha', 'https://i1.wp.com/www.dci.com.br/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2020/09/20490-1024x682.jpg.webp', '1983-02-18', '78901234567', 'jose.rocha@example.com', 'senha123', TRUE);
 
 
-CREATE TABLE tbl_endereco (
+/*  CREATE TABLE tbl_endereco (
     id int primary key auto_increment not null,
     cep varchar(8) not null
 );
@@ -42,34 +42,34 @@ VALUES
 ('22735155'),
 ('69312355'),
 ('40221255'),
-('13568605');
+('13568605'); */
 
+
+drop table tbl_empresa;
 
 CREATE TABLE tbl_empresa(
 id int primary key auto_increment not null,
-endereco_id int not null,
 nome varchar (150) not null,
 razaoSocial varchar(64) not null,
+cep varchar(9) not null,
 cnpj varchar (14) not null,
 numero_telefone varchar (11) not null,
 img_perfil text not null,
 email varchar (100) not null,
-senha varchar (32) not null,
-
-FOREIGN KEY (endereco_id ) REFERENCES tbl_endereco (id)
+senha varchar (32) not null
 );
 
-INSERT INTO tbl_empresa (endereco_id, nome, razaoSocial, cnpj, numero_telefone, img_perfil, email, senha)
+INSERT INTO tbl_empresa (nome, razaoSocial, cep, cnpj, numero_telefone, img_perfil, email, senha)
 VALUES
-(1, 'Empresa Alpha', 'Alpha Ltda', '12345678000190', '11987654321', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@alpha.com', 'senhaAlpha123'),
-(2, 'Empresa Beta', 'Beta S/A', '22345678000190', '11987654322', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@beta.com', 'senhaBeta123'),
-(3, 'Empresa Gamma', 'Gamma Comércio', '32345678000190', '11987654323', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@gamma.com', 'senhaGamma123'),
-(4, 'Empresa Delta', 'Delta Tecnologia', '42345678000190', '11987654324', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@delta.com', 'senhaDelta123'),
-(5, 'Empresa Épsilon', 'Épsilon Industrial', '52345678000190', '11987654325', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@epsilon.com', 'senhaEpsilon123'),
-(6, 'Empresa Zeta', 'Zeta Serviços', '62345678000190', '11987654326', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@zeta.com', 'senhaZeta123'),
-(7, 'Empresa Eta', 'Eta Ltda', '72345678000190', '11987654327', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@eta.com', 'senhaEta123'),
-(8, 'Empresa Theta', 'Theta Comércio', '82345678000190', '11987654328', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@theta.com', 'senhaTheta123'),
-(9, 'Empresa Iota', 'Iota Consultoria', '92345678000190', '11987654329', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@iota.com', 'senhaIota123');
+('Empresa Alpha', 'Alpha Ltda', '12345-600', '12345678000190', '11987654321', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@alpha.com', 'senhaAlpha123'),
+('Empresa Beta', 'Beta S/A', '12345-200', '22345678000190', '11987654322', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@beta.com', 'senhaBeta123'),
+('Empresa Gamma', 'Gamma Comércio', '12336-100', '32345678000190', '11987654323', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@gamma.com', 'senhaGamma123'),
+('Empresa Delta', 'Delta Tecnologia', '23456-600', '42345678000190', '11987654324', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@delta.com', 'senhaDelta123'),
+('Empresa Épsilon', 'Épsilon Industrial', '32145-600', '52345678000190', '11987654325', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@epsilon.com', 'senhaEpsilon123'),
+('Empresa Zeta', 'Zeta Serviços', '54321-600', '62345678000190', '11987654326', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@zeta.com', 'senhaZeta123'),
+('Empresa Eta', 'Eta Ltda', '12392-600', '72345678000190', '11987654327', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@eta.com', 'senhaEta123'),
+('Empresa Theta', 'Theta Comércio', '12332-600', '82345678000190', '11987654328', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@theta.com', 'senhaTheta123'),
+('Empresa Iota', 'Iota Consultoria', '54321-450', '92345678000190', '11987654329', 'https://img.freepik.com/vetores-gratis/vetor-de-gradiente-de-logotipo-colorido-de-passaro_343694-1365.jpg', 'contato@iota.com', 'senhaIota123');
 
 
 CREATE TABLE tbl_avaliacao (

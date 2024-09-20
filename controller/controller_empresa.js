@@ -147,9 +147,10 @@ const setInserirNovaEmpresa = async (dadosEmpresa, contentType) => {
     let resultDadosEmpresa = {}
 
     // Validação de campos obrigatórios e consistência de dados
-    if( dadosEmpresa.endereco_id == ''                       || dadosEmpresa.endereco_id == undefined              || dadosEmpresa.endereco_id.length > 256             ||
+    if(              
         dadosEmpresa.nome == ''                       || dadosEmpresa.nome == undefined           ||dadosEmpresa.nome.length > 256           || 
-        dadosEmpresa.razaoSocial == ''                  || dadosEmpresa.razaoSocial == undefined   ||dadosEmpresa.razaoSocial.length > 256         || 
+        dadosEmpresa.razaoSocial == ''                  || dadosEmpresa.razaoSocial == undefined   ||dadosEmpresa.razaoSocial.length > 256   ||
+        dadosEmpresa.cep == ''                    || dadosEmpresa.cep == undefined     ||    dadosEmpresa.cep.length > 9        ||  
         dadosEmpresa.cnpj == ''                    || dadosEmpresa.cnpj == undefined     ||    dadosEmpresa.cnpj.length > 256        || 
         dadosEmpresa.numero_telefone == ''           || dadosEmpresa.numero_telefone == undefined     ||    dadosEmpresa.numero_telefone.length > 256  ||
         dadosEmpresa.img_perfil == ''           || dadosEmpresa.img_perfil == undefined     ||    dadosEmpresa.img_perfil.length > 65000  ||
@@ -212,14 +213,14 @@ const setUpdateEMPRESA = async function(id, contentType, dadosEmpresa){
         if(String(contentType).toLowerCase() == 'application/json'){
             let updateEmpresaJson = {};
            // Validação de campos obrigatórios e consistência de dados
-           if( dadosEmpresa.nome == ''                       || dadosEmpresa.nome == undefined              || dadosEmpresa.nome.length > 64             ||
-           dadosEmpresa.telefone == ''                       || dadosEmpresa.telefone == undefined           ||dadosEmpresa.telefone.length > 11           || 
-           dadosEmpresa.cnpj == ''                  || dadosEmpresa.cnpj == undefined   ||dadosEmpresa.cnpj.length > 14         || 
-           dadosEmpresa.razaoSocial == ''                    || dadosEmpresa.razaoSocial == undefined     ||    dadosEmpresa.razaoSocial.length > 256        || 
-           dadosEmpresa.cep == ''           || dadosEmpresa.cep == undefined     ||    dadosEmpresa.cep.length > 20  ||
-           dadosEmpresa.img == ''           || dadosEmpresa.img == undefined     ||    dadosEmpresa.img.length > 65000  ||
-           dadosEmpresa.email == ''            || dadosEmpresa.email == undefined            || dadosEmpresa.email.length > 256       || 
-           dadosEmpresa.senha == ''         || dadosEmpresa.senha == undefined   || dadosEmpresa.senha.length > 8
+           if( dadosEmpresa.nome == ''                       || dadosEmpresa.nome == undefined           ||dadosEmpresa.nome.length > 256           || 
+            dadosEmpresa.razaoSocial == ''                  || dadosEmpresa.razaoSocial == undefined   ||dadosEmpresa.razaoSocial.length > 256   ||
+            dadosEmpresa.cep == ''                    || dadosEmpresa.cep == undefined     ||    dadosEmpresa.cep.length > 9        ||  
+            dadosEmpresa.cnpj == ''                    || dadosEmpresa.cnpj == undefined     ||    dadosEmpresa.cnpj.length > 256        || 
+            dadosEmpresa.numero_telefone == ''           || dadosEmpresa.numero_telefone == undefined     ||    dadosEmpresa.numero_telefone.length > 256  ||
+            dadosEmpresa.img_perfil == ''           || dadosEmpresa.img_perfil == undefined     ||    dadosEmpresa.img_perfil.length > 65000  ||
+            dadosEmpresa.email == ''            || dadosEmpresa.email == undefined            || dadosEmpresa.email.length > 256       || 
+            dadosEmpresa.senha == ''         || dadosEmpresa.senha == undefined   || dadosEmpresa.senha.length > 256
             
     
         ){
