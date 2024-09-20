@@ -125,8 +125,7 @@ const setInserirNovoMotorista = async (dadosMotorista, contentType) => {
         dadosMotorista.data_nascimento == ''            || dadosMotorista.data_nascimento == undefined  || dadosMotorista.data_nascimento.length > 10 ||  
         dadosMotorista.cpf == ''                        || dadosMotorista.cpf == undefined              || dadosMotorista.cpf.length > 256         || 
         dadosMotorista.email == ''                      || dadosMotorista.email == undefined            || dadosMotorista.email.length > 256       || 
-        dadosMotorista.senha == ''                      || dadosMotorista.senha == undefined            || dadosMotorista.senha.length > 256       ||
-        dadosMotorista.disponibilidade_status == ''     || dadosMotorista.disponibilidade_status == undefined || dadosMotorista.disponibilidade_status.length > 1
+        dadosMotorista.senha == ''                      || dadosMotorista.senha == undefined            || dadosMotorista.senha.length > 256       
          
         
     ){
@@ -182,13 +181,12 @@ const setUpdateMotorista = async function(id, contentType, dadosMotorista){
         if(String(contentType).toLowerCase() == 'application/json'){
             let updateMotoristaJson = {};
            // Validação de campos obrigatórios e consistência de dados
-           if( dadosMotorista.nome == ''                       || dadosMotorista.nome == undefined              || dadosMotorista.nome.length > 64             ||
-           dadosMotorista.data_nascimento == ''                       || dadosMotorista.data_nascimento == undefined           ||dadosMotorista.data_nascimento.length > 11           || 
-           dadosMotorista.cpf == ''                  || dadosMotorista.cpf == undefined   ||dadosMotorista.cpf.length > 14         || 
-           dadosMotorista.telefone == ''                    || dadosMotorista.telefone == undefined     ||    dadosMotorista.telefone.length > 256        || 
-           dadosMotorista.img == ''                        || dadosMotorista.img == undefined              || dadosMotorista.img.length > 65000         || 
-           dadosMotorista.email == ''            || dadosMotorista.email == undefined            || dadosMotorista.email.length > 256       || 
-           dadosMotorista.senha == ''         || dadosMotorista.senha == undefined   || dadosMotorista.senha.length > 8
+           if(dadosMotorista.nome == ''                       || dadosMotorista.nome == undefined             || dadosMotorista.nome.length > 256             ||
+            dadosMotorista.foto_url == ''                        || dadosMotorista.foto_url == undefined              || dadosMotorista.foto_url.length > 65000         || 
+            dadosMotorista.data_nascimento == ''            || dadosMotorista.data_nascimento == undefined  || dadosMotorista.data_nascimento.length > 10 ||  
+            dadosMotorista.cpf == ''                        || dadosMotorista.cpf == undefined              || dadosMotorista.cpf.length > 256         || 
+            dadosMotorista.email == ''                      || dadosMotorista.email == undefined            || dadosMotorista.email.length > 256       || 
+            dadosMotorista.senha == ''                      || dadosMotorista.senha == undefined            || dadosMotorista.senha.length > 256 
             
     
         ){
