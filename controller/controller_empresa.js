@@ -150,7 +150,7 @@ const setInserirNovaEmpresa = async (dadosEmpresa, contentType) => {
     if(              
         dadosEmpresa.nome == ''                       || dadosEmpresa.nome == undefined           ||dadosEmpresa.nome.length > 256           || 
         dadosEmpresa.razaoSocial == ''                  || dadosEmpresa.razaoSocial == undefined   ||dadosEmpresa.razaoSocial.length > 256   ||
-        dadosEmpresa.cep == ''                    || dadosEmpresa.cep == undefined     ||    dadosEmpresa.cep.length > 9        ||  
+        dadosEmpresa.cep == ''                    || dadosEmpresa.cep == undefined     ||    dadosEmpresa.cep.length > 256        ||  
         dadosEmpresa.cnpj == ''                    || dadosEmpresa.cnpj == undefined     ||    dadosEmpresa.cnpj.length > 256        || 
         dadosEmpresa.numero_telefone == ''           || dadosEmpresa.numero_telefone == undefined     ||    dadosEmpresa.numero_telefone.length > 256  ||
         dadosEmpresa.img_perfil == ''           || dadosEmpresa.img_perfil == undefined     ||    dadosEmpresa.img_perfil.length > 65000  ||
