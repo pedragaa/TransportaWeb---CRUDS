@@ -83,7 +83,7 @@ const deleteEmpresaById = async function(id){
 const insertEmpresa =  async function(dadosEmpresa) {
     try {
 
-     let sql  = `insert into tbl_empresa(nome, telefone, cnpj, razaoSocial, cep, img, email, senha) values ('${dadosEmpresa.nome}', '${dadosEmpresa.telefone}', '${dadosEmpresa.cnpj}', '${dadosEmpresa.razaoSocial}', '${dadosEmpresa.cep}', '${dadosEmpresa.img}', '${dadosEmpresa.email}', '${dadosEmpresa.senha}' )`
+     let sql  = `insert into tbl_empresa (endereco_id, nome, razaoSocial, cnpj, numero_telefone, img_perfil, email, senha) values ('${dadosEmpresa.endereco_id}', '${dadosEmpresa.nome}', '${dadosEmpresa.razaoSocial}', '${dadosEmpresa.cnpj}', '${dadosEmpresa.numero_telefone}', '${dadosEmpresa.img_perfil}', '${dadosEmpresa.email}', '${dadosEmpresa.senha}' )`
         // Executa o script SQL no banco de dados | Devemos usar execute e não query!
         // Execute deve ser utilizado para insert, update e delete, onde o banco não devolve dados
         let result = await prisma.$executeRawUnsafe(sql);
@@ -107,7 +107,7 @@ const updateEmpresa =  async function(id, dadosEmpresa) {
 
         let sql;
            
-        sql = `update tbl_empresa set nome = '${dadosEmpresa.nome}', telefone = '${dadosEmpresa.telefone}',  cnpj = '${dadosEmpresa.cnpj}', razão_social = '${dadosEmpresa.razao_social}', cep ='${dadosEmpresa.cep}', img - '${dadosEmpresa.img}', email = '${dadosEmpresa.email}', senha ='${dadosEmpresa.senha}' where id = ${id}`
+        sql = `update tbl_empresa set endereco_id = '${dadosEmpresa.endereco_id}', nome = '${dadosEmpresa.nome}', razaoSocial = '${dadosEmpresa.razaoSocial}',  cnpj = '${dadosEmpresa.cnpj}', numero_telefone = '${dadosEmpresa.numero_telefone}', img_perfil = '${dadosEmpresa.img_perfil}', email = '${dadosEmpresa.email}', senha ='${dadosEmpresa.senha}' where id = ${id}`
               
            // Executa o script SQL no banco de dados | Devemos usar execute e não query!
            // Execute deve ser utilizado para insert, update e delete, onde o banco não devolve dados
