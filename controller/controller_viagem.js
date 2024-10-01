@@ -46,5 +46,5 @@ const getListarViagens = async function(){
 }
 }
 module.exports = {
-    selectAllViagens
+    getListarViagens
 }
