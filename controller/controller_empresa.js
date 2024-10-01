@@ -8,7 +8,7 @@ const message = require('../modulo/config.js')
 
 // Import do arquivo DAO para manipular dados do banco de dados
 const empresaDAO = require('../model/DAO/empresa.js');
-const e = require('express');
+
 
 
 

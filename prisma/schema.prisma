@@ -19,7 +19,7 @@ model tbl_carga {
   descricao        String             @db.VarChar(255)
   peso             Decimal            @db.Decimal(10, 2)
   tipo             String             @db.VarChar(50)
-  valor            Decimal?           @db.Decimal(10, 2)
+  quantidade       Int
   tbl_viagem_carga tbl_viagem_carga[]
 }
 
@@ -36,34 +36,30 @@ model tbl_destino {
 }
 
 model tbl_empresa {
-  id              Int          @id @default(autoincrement())
-  endereco_id     Int
-  nome            String       @db.VarChar(150)
-  razaoSocial     String       @db.VarChar(64)
-  cnpj            String       @db.VarChar(14)
-  numero_telefone String       @db.VarChar(11)
-  email           String       @db.VarChar(100)
-  senha           String       @db.VarChar(32)
-  tbl_endereco    tbl_endereco @relation(fields: [endereco_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "tbl_empresa_ibfk_1")
-
-  @@index([endereco_id], map: "endereco_id")
+  id              Int    @id @default(autoincrement())
+  nome            String @db.VarChar(150)
+  razaoSocial     String @db.VarChar(64)
+  cep             String @db.VarChar(9)
+  cnpj            String @db.VarChar(20)
+  numero_telefone String @db.VarChar(11)
+  img_perfil      String @db.Text
+  email           String @db.VarChar(100)
+  senha           String @db.VarChar(32)
 }
 
 model tbl_endereco {
-  id          Int           @id @default(autoincrement())
-  cep         String        @db.VarChar(8)
-  tbl_empresa tbl_empresa[]
+  id  Int    @id @default(autoincrement())
+  cep String @db.VarChar(8)
 }
 
 model tbl_motorista {
   id                      Int                       @id @default(autoincrement())
   nome                    String                    @db.VarChar(150)
-  foto_url                String                    @db.VarChar(255)
+  foto_url                String                    @db.Text
   data_nascimento         DateTime                  @db.Date
-  cpf                     String                    @db.VarChar(11)
+  cpf                     String                    @db.VarChar(14)
   email                   String                    @db.VarChar(100)
   senha                   String                    @db.VarChar(32)
-  disponibilidade_status  Boolean
   tbl_motorista_avaliacao tbl_motorista_avaliacao[]
   tbl_motorista_veiculo   tbl_motorista_veiculo[]
   tbl_viagem              tbl_viagem[]

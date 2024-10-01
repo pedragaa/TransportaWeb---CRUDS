@@ -36,8 +36,8 @@ const bodyParserJSON = bodyParser.json();
 // *************************** Imports de arquivos e bibliotecas ************************************ //
 
     const controllerEmpresa = require('./controller/controller_empresa');
-    const controllerMotorista = require('./controller/controller_motorista')
-   
+    const controllerMotorista = require('./controller/controller_motorista')    
+    const controllerViagem = require('./controller/controller_viagem')
 
 
 // ************************************************************************************************* //
@@ -110,6 +110,10 @@ app.delete('/v1/transportaweb/deleteempresa/:id', cors(), async function(request
 })
 
 
+/*******************************************************************/
+//                           MOTORISTAS                            //
+/*******************************************************************/
+
 
 app.get('/v1/transportaweb/motoristas', cors(), async function(request,response,next){
     
@@ -153,6 +157,27 @@ app.delete('/v1/transportaweb/deletemotorista/:id', cors(), async function(reque
     response.json(resultDados);
 })
 
+
+/*******************************************************************/
+//                             VIAGEMS                             //
+/*******************************************************************/
+
+
+
+app.get('/v1/transportaweb/viagens', cors(), async function(request,response,next){
+    
+    // Chama a função para retornar os dados do filme
+    let dadosViagem = await controllerViagem.selectAllViagens();
+
+    // Validação para verificar se existem dados
+    if(dadosViagem){
+        response.json(dadosViagem)
+        response.status(200);
+    }else{
+        response.json({message: 'Nenhum registro encontrado'})
+        response.status()
+    }
+});
 
 
 app.listen(8080, function(){
