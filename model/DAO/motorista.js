@@ -43,6 +43,17 @@ const selectDriversById = async function(id){
           
       }
 }
+const selectDriverByEmailESenha = async function() {
+    try {
+        let sql = `SELECT email, senha from tbl_motorista`;
+        let rsAluno = await prisma.$queryRawUnsafe(sql);
+        return rsAluno;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+};
+
 
 const selectDriverByNome = async function (nome) {
     try {
@@ -136,5 +147,6 @@ module.exports = {
     selectDriverByNome,
     insertMotorista,
     updateMotorista,
-    selectIdMotorista
+    selectIdMotorista,
+    selectDriverByEmailESenha
 }

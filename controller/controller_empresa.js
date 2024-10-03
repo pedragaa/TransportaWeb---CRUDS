@@ -46,6 +46,41 @@ const getListarEmpresas = async function(){
 }
 }
 }
+
+const getListarEmpresaByUser = async function(){
+    
+    let listaEmpresa;
+    // Cria uma variavel do tipo json
+    let empresaJson = {};
+
+    if ((listaEmpresa)){
+        return listaEmpresa;
+    }else{
+    
+    // Chama a função do DAO para buscar os dados do banco de dados
+    let dadosEmpresa = await empresaDAO.selectEmpresaByInfo();
+
+    // Verifica se existem dados retornados do DAO
+    if(dadosEmpresa){
+        if(dadosEmpresa.length > 0){
+            if(dadosEmpresa.length > 0){
+            
+        // Montando a estrutura do JSOn
+        empresaJson.empresas = dadosEmpresa;
+        empresaJson.quantidade = dadosEmpresa.length;
+        empresaJson.status_code = 200;
+        // Retorna o JSON montado
+        return empresaJson; // 200
+        }else{
+            return message.ERROR_NOT_FOUND // 404
+        }
+        } else{
+            return message.ERROR_INTERNAL_SERVER_DB // 500
+
+    }
+}
+}
+}
 const getBuscarEmpresaNome = async function (nome){
     try {
         
@@ -273,5 +308,6 @@ module.exports = {
     getBuscarEmpresaNome,
     setInserirNovaEmpresa,
     setUpdateEMPRESA,
-    setDeleteEmpresa
+    setDeleteEmpresa,
+    getListarEmpresaByUser
 }

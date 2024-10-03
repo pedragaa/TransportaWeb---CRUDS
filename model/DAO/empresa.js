@@ -44,6 +44,18 @@ const selectEmpresasById = async function(id){
       }
 }
 
+const selectEmpresaByInfo = async function() {
+    try {
+        let sql = `SELECT email, senha from tbl_empresa`;
+        let rsEmpresas = await prisma.$queryRawUnsafe(sql);
+        return rsEmpresas;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+};
+
+
 const selectEmpresaByNome = async function (nome) {
     try {
         let sql = `select * from tbl_empresa where nome like "%${nome}%"`
@@ -134,5 +146,6 @@ module.exports = {
     selectEmpresaByNome,
     insertEmpresa,
     updateEmpresa,
-    selectIdEmpresa
+    selectIdEmpresa,
+    selectEmpresaByInfo
 }

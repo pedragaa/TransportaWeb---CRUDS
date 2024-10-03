@@ -67,6 +67,20 @@ app.get('/v1/transportaweb/empresas', cors(), async function(request,response,ne
         }
     });
 
+    app.get('/v1/transportaweb/empresas/users', cors(), async function(request,response,next){
+    
+        // Chama a função para retornar os dados do filme
+        let dadosEmpresa = await controllerEmpresa.getListarEmpresaByUser();
+
+        // Validação para verificar se existem dados
+        if(dadosEmpresa){
+            response.json(dadosEmpresa)
+            response.status(200);
+        }else{
+            response.json({message: 'Nenhum registro encontrado'})
+            response.status()
+        }
+    });
 
 
 app.get('/v1/transportaweb/empresa/:id', cors(), async function(request, response, next){
@@ -129,6 +143,22 @@ app.get('/v1/transportaweb/motoristas', cors(), async function(request,response,
         response.status()
     }
 });
+
+app.get('/v1/transportaweb/motoristas/users', cors(), async function(request,response,next){
+    
+    // Chama a função para retornar os dados do filme
+    let dadosMotorista = await controllerMotorista.getListarDriverByUser();
+
+    // Validação para verificar se existem dados
+    if(dadosMotorista){
+        response.json(dadosMotorista)
+        response.status(200);
+    }else{
+        response.json({message: 'Nenhum registro encontrado'})
+        response.status()
+    }
+});
+
 
 app.post('/v1/transportaweb/insertmotorista', cors(), bodyParserJSON, async function(request, response,next){
 
