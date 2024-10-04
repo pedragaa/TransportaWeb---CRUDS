@@ -5,26 +5,27 @@ USE db_transporta_web;
 drop table tbl_empresa;
 drop table tbl_motorista;
 
+SELECT id FROM tbl_motorista WHERE email = 'joao.silva@example.com' AND senha = 'senha123';
+
 CREATE TABLE tbl_motorista(
 id int primary key auto_increment not null,
 nome varchar (150) not null,
 foto_url text not null,
 data_nascimento date not null,
-cpf varchar (11) not null,
+cpf varchar (14) not null,
 email varchar (100) not null,
-senha varchar (32) not null,
-disponibilidade_status boolean not null
+senha varchar (32) not null
 );
 
-INSERT INTO tbl_motorista (nome, foto_url, data_nascimento, cpf, email, senha, disponibilidade_status)
+INSERT INTO tbl_motorista (nome, foto_url, data_nascimento, cpf, email, senha)
 VALUES
-('João Silva', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS97h5PsMDsjpHqK3_jSbKU2OS1VMQVsKYAzg&s', '1985-01-15', '12345678901', 'joao.silva@example.com', 'senha123', TRUE),
-('Maria Oliveira', 'https://img.freepik.com/fotos-premium/pessoas-mulheres-negocios-e-conceito-de-retrato-rosto-de-jovem-sorridente-feliz_380164-121867.jpg', '1990-03-25', '23456789012', 'maria.oliveira@example.com', 'senha123', FALSE),
-('Carlos Pereira', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY2sNg-GqV-xaq5qVOdgIx_QSJsY5vH_-jAA&s', '1978-07-10', '34567890123', 'carlos.pereira@example.com', 'senha123', TRUE),
-('Ana Souza', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPxDEo6Gwvu9iTLY2hDwVkehIQ7DEVezvO1A&s', '1982-11-05', '45678901234', 'ana.souza@example.com', 'senha123', TRUE),
-('Pedro Santos', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnlH6s3wv6plOo0UqtewztLNfrnq745Tmg7Q&s', '1995-06-20', '56789012345', 'pedro.santos@example.com', 'senha123', FALSE),
-('Paula Costa', 'https://s2-oglobo.glbimg.com/6Jszzah_XGYop6I173dS4OE4lGQ=/0x107:2362x1557/888x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_da025474c0c44edd99332dddb09cabe8/internal_photos/bs/2023/B/7/BTZjbdREKYomgDBUVfIQ/jenn-granneman-5.jpg', '1988-09-30', '67890123456', 'paula.costa@example.com', 'senha123', TRUE),
-('José Rocha', 'https://i1.wp.com/www.dci.com.br/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2020/09/20490-1024x682.jpg.webp', '1983-02-18', '78901234567', 'jose.rocha@example.com', 'senha123', TRUE);
+('João Silva', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS97h5PsMDsjpHqK3_jSbKU2OS1VMQVsKYAzg&s', '1985-01-15', '123.456.789-01', 'joao.silva@example.com', 'senha123'),
+('Maria Oliveira', 'https://img.freepik.com/fotos-premium/pessoas-mulheres-negocios-e-conceito-de-retrato-rosto-de-jovem-sorridente-feliz_380164-121867.jpg', '1990-03-25', '234.567.890-12', 'maria.oliveira@example.com', 'senha123'),
+('Carlos Pereira', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY2sNg-GqV-xaq5qVOdgIx_QSJsY5vH_-jAA&s', '1978-07-10', '345.678.901-23', 'carlos.pereira@example.com', 'senha123'),
+('Ana Souza', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPxDEo6Gwvu9iTLY2hDwVkehIQ7DEVezvO1A&s', '1982-11-05', '456.789.012-14', 'ana.souza@example.com', 'senha123'),
+('Pedro Santos', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnlH6s3wv6plOo0UqtewztLNfrnq745Tmg7Q&s', '1995-06-20', '567.890.123-45', 'pedro.santos@example.com', 'senha123'),
+('Paula Costa', 'https://s2-oglobo.glbimg.com/6Jszzah_XGYop6I173dS4OE4lGQ=/0x107:2362x1557/888x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_da025474c0c44edd99332dddb09cabe8/internal_photos/bs/2023/B/7/BTZjbdREKYomgDBUVfIQ/jenn-granneman-5.jpg', '1988-09-30', '678.901.234-56', 'paula.costa@example.com', 'senha123'),
+('José Rocha', 'https://i1.wp.com/www.dci.com.br/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2020/09/20490-1024x682.jpg.webp', '1983-02-18', '789.012.345-67', 'jose.rocha@example.com', 'senha123');
 
 
 /*  CREATE TABLE tbl_endereco (
@@ -52,7 +53,7 @@ id int primary key auto_increment not null,
 nome varchar (150) not null,
 razaoSocial varchar(64) not null,
 cep varchar(9) not null,
-cnpj varchar (14) not null,
+cnpj varchar (20) not null,
 numero_telefone varchar (11) not null,
 img_perfil text not null,
 email varchar (100) not null,
