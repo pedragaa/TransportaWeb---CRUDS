@@ -44,9 +44,9 @@ const selectEmpresasById = async function(id){
       }
 }
 
-const selectEmpresaByInfo = async function() {
+const selectEmpresaByInfo = async function(email, senha) {
     try {
-        let sql = `SELECT email, senha from tbl_empresa`;
+        let sql = `SELECT id FROM tbl_empresa WHERE email = '${email}' AND senha = '${senha}'`;
         let rsEmpresas = await prisma.$queryRawUnsafe(sql);
         return rsEmpresas;
     } catch (error) {

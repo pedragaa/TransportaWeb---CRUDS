@@ -43,11 +43,11 @@ const selectDriversById = async function(id){
           
       }
 }
-const selectDriverByEmailESenha = async function() {
+const selectDriverByEmailESenha = async function(email, senha) {
     try {
-        let sql = `SELECT email, senha from tbl_motorista`;
-        let rsAluno = await prisma.$queryRawUnsafe(sql);
-        return rsAluno;
+        let sql = `SELECT id FROM tbl_motorista WHERE email = '${email}' AND senha = '${senha}'`;
+        let rsMotoristas = await prisma.$queryRawUnsafe(sql);
+        return rsMotoristas;
     } catch (error) {
         console.log(error);
         return false;

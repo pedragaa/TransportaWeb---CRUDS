@@ -123,6 +123,21 @@ app.delete('/v1/transportaweb/deleteempresa/:id', cors(), async function(request
     response.json(resultDados);
 })
 
+app.post('/v1/transportaweb/empresa/login', cors(), bodyParserJSON, async function(request, response) {
+    // Recebe o content-type da requisição
+    let contentType = request.headers['content-type'];
+
+    // Recebe todos os dados encaminhados na requisição pelo Body
+    let dadosBody = request.body;
+
+    // Encaminha os dados para a controller realizar o login
+    let resultadoLogin = await controllerEmpresa.loginEmpresa(dadosBody.email, dadosBody.senha, contentType);
+
+    response.status(resultadoLogin.status_code);
+    response.json(resultadoLogin);
+});
+
+
 
 /*******************************************************************/
 //                           MOTORISTAS                            //
@@ -144,20 +159,20 @@ app.get('/v1/transportaweb/motoristas', cors(), async function(request,response,
     }
 });
 
-app.get('/v1/transportaweb/motoristas/users', cors(), async function(request,response,next){
-    
-    // Chama a função para retornar os dados do filme
-    let dadosMotorista = await controllerMotorista.getListarDriverByUser();
+app.post('/v1/transportaweb/motorista/login', cors(), bodyParserJSON, async function(request, response) {
+    // Recebe o content-type da requisição
+    let contentType = request.headers['content-type'];
 
-    // Validação para verificar se existem dados
-    if(dadosMotorista){
-        response.json(dadosMotorista)
-        response.status(200);
-    }else{
-        response.json({message: 'Nenhum registro encontrado'})
-        response.status()
-    }
+    // Recebe todos os dados encaminhados na requisição pelo Body
+    let dadosBody = request.body;
+
+    // Encaminha os dados para a controller realizar o login
+    let resultadoLogin = await controllerMotorista.loginMotorista(dadosBody.email, dadosBody.senha, contentType);
+
+    response.status(resultadoLogin.status_code);
+    response.json(resultadoLogin);
 });
+
 
 
 app.post('/v1/transportaweb/insertmotorista', cors(), bodyParserJSON, async function(request, response,next){

@@ -47,40 +47,27 @@ const getListarEmpresas = async function(){
 }
 }
 
-const getListarEmpresaByUser = async function(){
-    
-    let listaEmpresa;
-    // Cria uma variavel do tipo json
-    let empresaJson = {};
+const loginEmpresa = async function(email, senha) {
+    try {
+        let empresaJson = {};
+        let dadosEmpresa = await empresaDAO.selectEmpresaByInfo(email, senha);
 
-    if ((listaEmpresa)){
-        return listaEmpresa;
-    }else{
-    
-    // Chama a função do DAO para buscar os dados do banco de dados
-    let dadosEmpresa = await empresaDAO.selectEmpresaByInfo();
-
-    // Verifica se existem dados retornados do DAO
-    if(dadosEmpresa){
-        if(dadosEmpresa.length > 0){
-            if(dadosEmpresa.length > 0){
-            
-        // Montando a estrutura do JSOn
-        empresaJson.empresas = dadosEmpresa;
-        empresaJson.quantidade = dadosEmpresa.length;
-        empresaJson.status_code = 200;
-        // Retorna o JSON montado
-        return empresaJson; // 200
-        }else{
-            return message.ERROR_NOT_FOUND // 404
+        if (dadosEmpresa.length === 0) {
+            return { status_code: 400, message: 'Usuário não encontrado ou senha incorreta' };
         }
-        } else{
-            return message.ERROR_INTERNAL_SERVER_DB // 500
 
+        console.log(dadosEmpresa);
+        
+        // Se tudo estiver correto, retorna o usuário e uma mensagem de sucesso
+        empresaJson.usuario_id = dadosEmpresa[0].id;
+        empresaJson.status_code = 200;
+        empresaJson.message = 'Login bem-sucedido';
+        return empresaJson;
+    } catch (error) {
+        console.log(error);
+        return { status_code: 500, message: 'Erro interno do servidor' };
     }
-}
-}
-}
+};
 const getBuscarEmpresaNome = async function (nome){
     try {
         
@@ -309,5 +296,5 @@ module.exports = {
     setInserirNovaEmpresa,
     setUpdateEMPRESA,
     setDeleteEmpresa,
-    getListarEmpresaByUser
+    loginEmpresa
 }

@@ -46,40 +46,28 @@ const getListarMotoristas = async function(){
 }
 }
 
-const getListarDriverByUser = async function(email, senha){
-    
-    let listaMotoristas;
-    // Cria uma variavel do tipo json
-    let motoristaJson = {};
+const loginMotorista = async function(email, senha) {
+    try {
+        let motoristaJson = {};
+        let dadosMotorista = await motoristaDAO.selectDriverByEmailESenha(email, senha);
 
-    if ((listaMotoristas)){
-        return listaMotoristas;
-    }else{
-    
-    // Chama a função do DAO para buscar os dados do banco de dados
-    let dadosMotorista = await motoristaDAO.selectDriverByEmailESenha();
-
-    // Verifica se existem dados retornados do DAO
-    if(dadosMotorista){
-        if(dadosMotorista.length > 0){
-            if(dadosMotorista.length > 0){
-            
-        // Montando a estrutura do JSOn
-        motoristaJson.motoristas = dadosMotorista;
-        motoristaJson.quantidade = dadosMotorista.length;
-        motoristaJson.status_code = 200;
-        // Retorna o JSON montado
-        return motoristaJson; // 200
-        }else{
-            return message.ERROR_NOT_FOUND // 404
+        if (dadosMotorista.length === 0) {
+            return { status_code: 400, message: 'Usuário não encontrado ou senha incorreta' };
         }
-        } else{
-            return message.ERROR_INTERNAL_SERVER_DB // 500
 
+        console.log(dadosMotorista);
+        
+        // Se tudo estiver correto, retorna o usuário e uma mensagem de sucesso
+        motoristaJson.usuario_id = dadosMotorista[0].id;
+        motoristaJson.status_code = 200;
+        motoristaJson.message = 'Login bem-sucedido';
+        return motoristaJson;
+    } catch (error) {
+        console.log(error);
+        return { status_code: 500, message: 'Erro interno do servidor' };
     }
-}
-}
-    };
+};
+
 const getBuscarMotoristasNome = async function (nome){
     try {
         
@@ -271,5 +259,5 @@ module.exports = {
     getBuscarMotoristasNome,
     setInserirNovoMotorista,
     setUpdateMotorista,
-    getListarDriverByUser
+    loginMotorista
 }
