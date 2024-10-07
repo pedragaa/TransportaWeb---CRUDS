@@ -212,7 +212,7 @@ app.delete('/v1/transportaweb/deletemotorista/:id', cors(), async function(reque
 app.get('/v1/transportaweb/viagens', cors(), async function(request,response,next){
     
     // Chama a função para retornar os dados do filme
-    let dadosViagem = await controllerViagem.selectAllViagens();
+    let dadosViagem = await controllerViagem.getListarViagens();
 
     // Validação para verificar se existem dados
     if(dadosViagem){
@@ -223,6 +223,23 @@ app.get('/v1/transportaweb/viagens', cors(), async function(request,response,nex
         response.status()
     }
 });
+
+
+app.post('/v1/transportaweb/newviagem', cors(), bodyParserJSON, async function(request, response,next){
+
+    // Recebe o content-type da requisição (API deve receber application/json )
+   let contentType = request.headers['content-type'];
+
+   // Recebe os dados encaminhados na requisição do body (JSON)
+   let dadosBody = request.body;
+   
+   // Encaminha os dados da requisição para a controller enviar para o banco de dados
+   let resultDados = await controllerViagem.setInserirViagem(dadosBody, contentType);
+
+   response.status(resultDados.status_code);
+   response.json(resultDados);
+})
+
 
 
 app.listen(8080, function(){
