@@ -67,21 +67,6 @@ app.get('/v1/transportaweb/empresas', cors(), async function(request,response,ne
         }
     });
 
-    app.get('/v1/transportaweb/empresas/users', cors(), async function(request,response,next){
-    
-        // Chama a função para retornar os dados do filme
-        let dadosEmpresa = await controllerEmpresa.getListarEmpresaByUser();
-
-        // Validação para verificar se existem dados
-        if(dadosEmpresa){
-            response.json(dadosEmpresa)
-            response.status(200);
-        }else{
-            response.json({message: 'Nenhum registro encontrado'})
-            response.status()
-        }
-    });
-
 
 app.get('/v1/transportaweb/empresa/:id', cors(), async function(request, response, next){
     // Recebe o id da requisição 
@@ -111,6 +96,21 @@ app.post('/v1/transportaweb/insertempresa', cors(), bodyParserJSON, async functi
     response.status(resultDados.status_code);
     response.json(resultDados);
 })
+
+// Para a empresa poder editar seu perfil
+app.put('/v1/transportaweb/empresa/:id', cors(), bodyParserJSON, async function(request,response, next){
+    let idEmpresa = request.params.id
+    let contentType = request.headers['content-type']
+    let dadosBody = request.body
+
+    let dadosEmpresa = await controllerEmpresa.setUpdateEMPRESA(idEmpresa, contentType, dadosBody);
+
+    response.status(dadosEmpresa.status_code);
+    response.json(dadosEmpresa)
+})
+
+
+
 
 // Deleta um filme a partir de seu ID
 app.delete('/v1/transportaweb/deleteempresa/:id', cors(), async function(request, response, next){
