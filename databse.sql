@@ -2,7 +2,7 @@ CREATE SCHEMA db_transporta_web;
 
 USE db_transporta_web;
 
-drop table tbl_empresa;
+
 drop table tbl_motorista;
 
 SELECT id FROM tbl_motorista WHERE email = 'joao.silva@example.com' AND senha = 'senha123';
@@ -12,24 +12,20 @@ id int primary key auto_increment not null,
 nome varchar (150) not null,
 data_nascimento date not null,
 cpf varchar (14) not null,
-rg varchar(12) not null,
-numero_cnh varchar(20) not null,
-placa varchar(8) not null,	
-modelo varchar(256) not null,
-carga_maxima int not null,
-foto_url text not null,
 telefone varchar(13) not null,
+cnh varchar(20) not null,	
+foto_url text not null,
 email varchar (100) not null,
 senha varchar (32) not null
 );
 
-INSERT INTO tbl_motorista (nome, data_nascimento, cpf, rg, numero_cnh, placa, modelo, carga_maxima, foto_url, telefone, email, senha)
+INSERT INTO tbl_motorista (nome, data_nascimento, cpf, telefone, cnh, foto_url, email, senha)
 VALUES
-('João Silva', '1984-04-21', '47496775821', '56.843.539-4', '123.456.789-10', 'ABC1277', 'Constellation', '2.000','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS97h5PsMDsjpHqK3_jSbKU2OS1VMQVsKYAzg&s', '11959747737', 'joao.silva@example.com', 'senha123'),
-('Leonardo Silva', '1972-04-21', '74796775821', '78.843.539-4', '321.456.789-10', 'ABH1287', 'Scania', '4.000','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS97h5PsMDsjpHqK3_jSbKU2OS1VMQVsKYAzg&s', '11988459010', 'leonardo.silva@example.com', 'leonardo123'),
-('Luana Freire', '2000-01-12', '59596775821', '65.493.539-4', '123.456.789-10', 'CHA1277', 'Scania', '4.000','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS97h5PsMDsjpHqK3_jSbKU2OS1VMQVsKYAzg&s', '11959655434', 'luana.freire@example.com', 'luana123'),
-('Guilherme Oito', '1945-01-29', '48596775873', '73.673.879-4', '312.654.789-10', 'BGA1405', 'Constellation', '2.000','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS97h5PsMDsjpHqK3_jSbKU2OS1VMQVsKYAzg&s', '11765655434', 'guilherme.oito@example.com', 'guilherme123'),
-('Yasmin Quatro', '1999-02-11', '12111175821', '11.111.539-4', '111.111.789-10', 'AAA1277', 'Scania', '4.000','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS97h5PsMDsjpHqK3_jSbKU2OS1VMQVsKYAzg&s', '11959651111', 'yasmin.quatro@example.com', 'yasmin123');
+('João Silva', '1984-04-21', '47496775821', '11959747737', ' 12345678901', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS97h5PsMDsjpHqK3_jSbKU2OS1VMQVsKYAzg&s', 'joao.silva@example.com', 'senha123'),
+('Leonardo Silva', '1972-04-21', '74796775821', '11988459010', '98765432109', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS97h5PsMDsjpHqK3_jSbKU2OS1VMQVsKYAzg&s', 'leonardo.silva@example.com', 'leonardo123'),
+('Luana Freire', '2000-01-12', '59596775821', '11959655434', '10293847562', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS97h5PsMDsjpHqK3_jSbKU2OS1VMQVsKYAzg&s', 'luana.freire@example.com', 'luana123'),
+('Guilherme Oito', '1945-01-29', '48596775873', '11765655434', '89193847562', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS97h5PsMDsjpHqK3_jSbKU2OS1VMQVsKYAzg&s', 'guilherme.oito@example.com', 'guilherme123'),
+('Yasmin Quatro', '1999-02-11', '12111175821',  '11959651111', '27654847562', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS97h5PsMDsjpHqK3_jSbKU2OS1VMQVsKYAzg&s', 'yasmin.quatro@example.com', 'yasmin123');
 
 
 
