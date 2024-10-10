@@ -46,6 +46,34 @@ const getListarMotoristas = async function(){
 }
 }
 
+const setDeleteMotorista = async function(id){
+    try {
+        
+        let idMotorista = id;
+
+        if(idMotorista == '' || idMotorista == undefined || isNaN(idMotorista)){
+            return message.ERROR_INVALID_ID;
+        }else{
+            let chamarConst = await motoristaDAO.selectDriversById(idMotorista)
+
+            if(chamarConst.length > 0){
+                let dadosMotorista = await motoristaDAO.deleteMotoristaById(id)
+
+                if(dadosMotorista){
+                    return message.SUCESS_DELETED_ITEM
+                }else {
+                    return message.ERROR_INTERNAL_SERVER_DB
+                }
+            
+        }else {
+            return message.ERROR_NOT_FOUND
+        }
+    }
+    } catch (error) {
+        console.log(error)
+        return message.ERROR_INTERNAL_SERVER
+    }
+}
 const loginMotorista = async function(email, senha) {
     try {
         let motoristaJson = {};
@@ -144,9 +172,11 @@ const setInserirNovoMotorista = async (dadosMotorista, contentType) => {
 
     // Validação de campos obrigatórios e consistência de dados
     if( dadosMotorista.nome == ''                       || dadosMotorista.nome == undefined             || dadosMotorista.nome.length > 256             ||
-        dadosMotorista.foto_url == ''                        || dadosMotorista.foto_url == undefined              || dadosMotorista.foto_url.length > 65000         || 
         dadosMotorista.data_nascimento == ''            || dadosMotorista.data_nascimento == undefined  || dadosMotorista.data_nascimento.length > 10 ||  
         dadosMotorista.cpf == ''                        || dadosMotorista.cpf == undefined              || dadosMotorista.cpf.length > 256         || 
+        dadosMotorista.telefone == ''                        || dadosMotorista.telefone == undefined              || dadosMotorista.telefone.length > 256         || 
+        dadosMotorista.cnh == ''                        || dadosMotorista.cnh == undefined              || dadosMotorista.cnh.length > 256         || 
+        dadosMotorista.foto_url == ''                        || dadosMotorista.foto_url == undefined              || dadosMotorista.foto_url.length > 65000         || 
         dadosMotorista.email == ''                      || dadosMotorista.email == undefined            || dadosMotorista.email.length > 256       || 
         dadosMotorista.senha == ''                      || dadosMotorista.senha == undefined            || dadosMotorista.senha.length > 256       
          
@@ -205,11 +235,13 @@ const setUpdateMotorista = async function(id, contentType, dadosMotorista){
             let updateMotoristaJson = {};
            // Validação de campos obrigatórios e consistência de dados
            if(dadosMotorista.nome == ''                       || dadosMotorista.nome == undefined             || dadosMotorista.nome.length > 256             ||
-            dadosMotorista.foto_url == ''                        || dadosMotorista.foto_url == undefined              || dadosMotorista.foto_url.length > 65000         || 
-            dadosMotorista.data_nascimento == ''            || dadosMotorista.data_nascimento == undefined  || dadosMotorista.data_nascimento.length > 10 ||  
-            dadosMotorista.cpf == ''                        || dadosMotorista.cpf == undefined              || dadosMotorista.cpf.length > 256         || 
-            dadosMotorista.email == ''                      || dadosMotorista.email == undefined            || dadosMotorista.email.length > 256       || 
-            dadosMotorista.senha == ''                      || dadosMotorista.senha == undefined            || dadosMotorista.senha.length > 256 
+           dadosMotorista.data_nascimento == ''            || dadosMotorista.data_nascimento == undefined  || dadosMotorista.data_nascimento.length > 10 ||  
+           dadosMotorista.cpf == ''                        || dadosMotorista.cpf == undefined              || dadosMotorista.cpf.length > 256         || 
+           dadosMotorista.telefone == ''                        || dadosMotorista.telefone == undefined              || dadosMotorista.telefone.length > 256         || 
+           dadosMotorista.cnh == ''                        || dadosMotorista.cnh == undefined              || dadosMotorista.cnh.length > 256         || 
+           dadosMotorista.foto_url == ''                        || dadosMotorista.foto_url == undefined              || dadosMotorista.foto_url.length > 65000         || 
+           dadosMotorista.email == ''                      || dadosMotorista.email == undefined            || dadosMotorista.email.length > 256       || 
+           dadosMotorista.senha == ''                      || dadosMotorista.senha == undefined            || dadosMotorista.senha.length > 256    
             
     
         ){
@@ -259,5 +291,6 @@ module.exports = {
     getBuscarMotoristasNome,
     setInserirNovoMotorista,
     setUpdateMotorista,
-    loginMotorista
+    loginMotorista,
+    setDeleteMotorista
 }

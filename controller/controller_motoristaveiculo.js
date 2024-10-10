@@ -81,7 +81,63 @@ const getListarMotoristaVeiculoByID = async function (id){
 
 }
 
+const setInserirNovoMotoristaVeiculo = async (dadosMotoristaVeiculo, contentType) => {
+
+    try{
+
+   
+    if(String(contentType).toLowerCase() == 'application/json'){
+
+    
+
+    // Cria a variável json
+    let resultdadosMotoristaVeiculo = {}
+
+    // Validação de campos obrigatórios e consistência de dados
+    if( dadosMotoristaVeiculo.id_motorista == ''                       || dadosMotoristaVeiculo.id_motorista == undefined             || dadosMotoristaVeiculo.id_motorista.length > 1       ||
+        dadosMotoristaVeiculo.id_veiculo == ''                        || dadosMotoristaVeiculo.id_veiculo == undefined              || dadosMotoristaVeiculo.id_veiculo.length > 1
+         
+        
+    ){
+        return message.ERROR_REQUIRED_FIELDS // 400 Campos obrigatórios / Incorretos
+     }else{
+   
+        // Encaminha os dados para o DAO, inserir no Banco de Dados
+        let novoMotorista = await motoristaveiculoDAO.insertMotoristaVeiculo(dadosMotoristaVeiculo);
+
+        let idSelect = await motoristaveiculoDAO.selectIdMotoristaVeiculo();
+
+        dadosMotoristaVeiculo.id = Number (idSelect[0].id)
+        
+        // Validação de inserção de dados no banco de dados 
+        if(novoMotorista){
+
+           
+            // Cria o padrão de JSOn para o retorno dos dados criados no banco de dados
+            resultdadosMotoristaVeiculo.status = message.SUCESS_CREATED_ITEM.status;
+            resultdadosMotoristaVeiculo.status_code = message.SUCESS_CREATED_ITEM.status_code;
+            resultdadosMotoristaVeiculo.message = message.SUCESS_CREATED_ITEM.message;
+            resultdadosMotoristaVeiculo.motorista = dadosMotoristaVeiculo;
+
+            return resultdadosMotoristaVeiculo; // 201
+        } else{
+            return message.ERROR_INTERNAL_SERVER_DB; // 500 Erro na camada do DAO (Banco)
+            
+    
+         }
+       }
+    }else{
+        return message.ERROR_CONTENT_TYPE // 415 Erro no content type
+    }
+}catch(error){
+    console.log(error)
+    return message.ERROR_INTERNAL_SERVER // 500 Erro na camada de aplicação
+}
+     
+}
+
 module.exports = {
     getListarMotoristaVeiculo,
-    getListarMotoristaVeiculoByID
+    getListarMotoristaVeiculoByID,
+    setInserirNovoMotoristaVeiculo
 }

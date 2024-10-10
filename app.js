@@ -38,7 +38,7 @@ const bodyParserJSON = bodyParser.json();
     const controllerEmpresa = require('./controller/controller_empresa');
     const controllerMotorista = require('./controller/controller_motorista')    
     const controllerViagem = require('./controller/controller_viagem')
-
+    const motoristaVeiculo = require('./controller/controller_motoristaveiculo')
 
 // ************************************************************************************************* //
 //Função para configurar as permissões do cors
@@ -159,6 +159,16 @@ app.get('/v1/transportaweb/motoristas', cors(), async function(request,response,
     }
 });
 
+app.get('/v1/transportaweb/motorista/:id', cors(), async function(request, response, next){
+
+    let idMotorista = request.params.id
+
+    let resultDados = await controllerMotorista.getListarMotoristaById(idMotorista);
+
+    response.status(resultDados.status_code);
+    response.json(resultDados);
+})
+
 app.post('/v1/transportaweb/motorista/login', cors(), bodyParserJSON, async function(request, response) {
     // Recebe o content-type da requisição
     let contentType = request.headers['content-type'];
@@ -196,15 +206,29 @@ app.delete('/v1/transportaweb/deletemotorista/:id', cors(), async function(reque
 
     let idMotorista = request.params.id
 
-    let resultDados = await controllerMotorista.se(idMotorista);
+    let resultDados = await controllerMotorista.setDeleteMotorista(idMotorista);
 
     response.status(resultDados.status_code);
     response.json(resultDados);
 })
 
+// Para o motorista poder editar seu perfil
+app.put('/v1/transportaweb/editmotorista/:id', cors(), bodyParserJSON, async function(request,response, next){
+    let idMotorista = request.params.id
+    let contentType = request.headers['content-type']
+    let dadosBody = request.body
+
+    let dadosMotorista = await controllerMotorista.setUpdateMotorista(idMotorista, contentType, dadosBody);
+
+    response.status(dadosMotorista.status_code);
+    response.json(dadosMotorista)
+})
+
+
+
 
 /*******************************************************************/
-//                             VIAGEMS                             //
+//                             VIAGENS                             //
 /*******************************************************************/
 
 
@@ -235,6 +259,26 @@ app.post('/v1/transportaweb/newviagem', cors(), bodyParserJSON, async function(r
    
    // Encaminha os dados da requisição para a controller enviar para o banco de dados
    let resultDados = await controllerViagem.setInserirViagem(dadosBody, contentType);
+
+   response.status(resultDados.status_code);
+   response.json(resultDados);
+})
+
+/*******************************************
+ * Intermediárias
+ *******************************************/
+
+
+app.post('/v1/transportaweb/motoristaveiculo', cors(), bodyParserJSON, async function(request, response,next){
+
+    // Recebe o content-type da requisição (API deve receber application/json )
+   let contentType = request.headers['content-type'];
+
+   // Recebe os dados encaminhados na requisição do body (JSON)
+   let dadosBody = request.body;
+   
+   // Encaminha os dados da requisição para a controller enviar para o banco de dados
+   let resultDados = await motoristaVeiculo.setInserirNovoMotoristaVeiculo(dadosBody, contentType);
 
    response.status(resultDados.status_code);
    response.json(resultDados);
