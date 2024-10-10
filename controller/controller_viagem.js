@@ -28,6 +28,9 @@ const getListarViagens = async function(){
     if(dadosViagem){
         if(dadosViagem.length > 0){
             if(dadosViagem.length > 0){
+                for (let motorista of dadosViagem){
+                    motorista.motorista = await viagemDAO.selectMotoristaViagem(motorista.id_motorista)
+                }
             
         // Montando a estrutura do JSOn
         viagensJSon.viagens = dadosViagem;
