@@ -11,7 +11,32 @@ const prisma = new PrismaClient();
 
 const selectAllViagens = async function(){
 
-    let sql = 'select * from tbl_viagem order by id desc';
+    let sql = `
+    SELECT 
+    v.id_viagem, 
+    v.dia_partida, 
+    v.horario_partida, 
+    v.dia_chegada, 
+    v.remetente, 
+    v.destinatario, 
+    v.status_entregue,
+    p.cep AS partida_cep,
+    d.cep AS destino_cep,
+    m.nome AS motorista_nome,
+    veiculo.modelo AS veiculo_modelo
+FROM 
+    tbl_viagem v
+INNER JOIN 
+    tbl_partida p ON v.id_partida = p.id
+INNER JOIN 
+    tbl_destino d ON v.id_destino = d.id
+INNER JOIN 
+    tbl_motorista m ON v.id_motorista = m.id
+INNER JOIN 
+    tbl_veiculo veiculo ON v.id_veiculo = veiculo.id
+ORDER BY 
+    v.id DESC;
+;`;
     let rsViagrn = await prisma.$queryRawUnsafe(sql)
      if(rsViagrn.length > 0)
      return rsViagrn;
@@ -19,22 +44,28 @@ const selectAllViagens = async function(){
         return false
 
 }
-const selectMotoristaViagem = async function(){
+/* const selectMotoristaViagem = async function(){
 
     let sql = `
- SELECT v.id AS viagem_id, m.nome AS nome_motorista
-FROM tbl_viagem v
-JOIN tbl_motorista m ON v.id_motorista = m.id
-WHERE v.id_motorista IS NOT NULL;
-
-  `;
+    SELECT 
+    v.id_viagem, v.dia_partida, v.horario_partida, v.dia_chegada, v.remetente, v.destinatario, v.status_entregue,
+    p.cep AS partida_cep,
+    d.cep AS destino_cep,
+    m.nome AS motorista_nome,
+    veiculo.modelo AS veiculo_modelo
+FROM 
+    tbl_viagem v
+INNER JOIN tbl_partida p ON v.id_partida = p.id
+INNER JOIN tbl_destino d ON v.id_destino = d.id
+INNER JOIN tbl_motorista m ON v.id_motorista = m.id
+INNER JOIN tbl_veiculo veiculo ON v.id_veiculo = veiculo.id;`;
     let rsViagrn = await prisma.$queryRawUnsafe(sql)
      if(rsViagrn.length > 0)
      return rsViagrn;
      else
         return false
 
-}
+} */
 const selectViagensByID = async function(id){
   try {
       let sql = `select * from tbl_viagem where id = ${id}`;
@@ -85,7 +116,7 @@ const deleteViagemByID = async function(id){
 const insertViagem =  async function(dadosViagem) {
     try {
 
-     let sql  = `insert into tbl_viagem (id_viagem, dia_partida, dia_chegada, remetente, destinatario, status_entregue, id_partida, id_destino, id_motorista) values ('${dadosViagem.id_viagem}', '${dadosViagem.dia_partida}', '${dadosViagem.dia_chegada}', '${dadosViagem.remetente}', '${dadosViagem.destinatario}', '${dadosViagem.status_entregue}', '${dadosViagem.id_partida}', '${dadosViagem.id_destino}', '${dadosViagem.id_motorista}' )`
+     let sql  = `insert into tbl_viagem (id_viagem, dia_partida, horario_partida, dia_chegada, remetente, destinatario, status_entregue, id_partida, id_destino, id_motorista, id_veiculo) values ('${dadosViagem.id_viagem}', '${dadosViagem.dia_partida}', '${dadosViagem.horario_partida}', '${dadosViagem.dia_chegada}', '${dadosViagem.remetente}', '${dadosViagem.destinatario}', '${dadosViagem.status_entregue}', '${dadosViagem.id_partida}', '${dadosViagem.id_destino}', '${dadosViagem.id_motorista}', '${dadosViagem.id_veiculo}' )`
         // Executa o script SQL no banco de dados | Devemos usar execute e não query!
         // Execute deve ser utilizado para insert, update e delete, onde o banco não devolve dados
         let result = await prisma.$executeRawUnsafe(sql);
@@ -137,5 +168,5 @@ module.exports = {
     insertViagem,
     updateEmpresa,
     selectIDViagem,
-    selectMotoristaViagem
+    //selectMotoristaViagem
 }

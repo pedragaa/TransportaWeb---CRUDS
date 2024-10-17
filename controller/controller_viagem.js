@@ -28,9 +28,7 @@ const getListarViagens = async function(){
     if(dadosViagem){
         if(dadosViagem.length > 0){
             if(dadosViagem.length > 0){
-                for (let motorista of dadosViagem){
-                    motorista.motorista = await viagemDAO.selectMotoristaViagem(motorista.id_motorista)
-                }
+             
             
         // Montando a estrutura do JSOn
         viagensJSon.viagens = dadosViagem;
@@ -62,14 +60,16 @@ const setInserirViagem = async (dadosViagem, contentType) => {
 
     // Validação de campos obrigatórios e consistência de dados
     if( dadosViagem.id_viagem == ''                       || dadosViagem.id_viagem == undefined             || dadosViagem.id_viagem.length > 11             ||
-        dadosViagem.dia_partida == ''                        || dadosViagem.dia_partida == undefined              || dadosViagem.dia_partida.length > 10         || 
+        dadosViagem.dia_partida == ''                        || dadosViagem.dia_partida == undefined              || dadosViagem.dia_partida.length > 10         ||
+        dadosViagem.horario_partida == ''                        || dadosViagem.horario_partida == undefined              || dadosViagem.horario_partida.length > 8         || 
         // dadosViagem.dia_chegada == ''            || dadosViagem.dia_chegada == undefined  || dadosViagem.dia_chegada.length > 10 ||  
         dadosViagem.remetente == ''                        || dadosViagem.remetente == undefined              || dadosViagem.remetente.length > 256         || 
         dadosViagem.destinatario == ''                      || dadosViagem.destinatario == undefined            || dadosViagem.destinatario.length > 256       || 
-        dadosViagem.status_entregue == ''                      || dadosViagem.status_entregue == undefined            || dadosViagem.status_entregue.length > 256    ||   
-        dadosViagem.id_partida == ''                      || dadosViagem.id_partida == undefined            || dadosViagem.id_partida.length > 256   ||  
-        dadosViagem.id_destino == ''                      || dadosViagem.id_destino == undefined            || dadosViagem.id_destino.length > 256    ||         
-        dadosViagem.id_motorista == ''                      || dadosViagem.id_motorista == undefined            || dadosViagem.id_motorista.length > 256       
+        dadosViagem.status_entregue == ''                      || dadosViagem.status_entregue == undefined            || dadosViagem.status_entregue.length > 1    ||   
+        dadosViagem.id_partida == ''                      || dadosViagem.id_partida == undefined            || dadosViagem.id_partida.length > 1   ||  
+        dadosViagem.id_destino == ''                      || dadosViagem.id_destino == undefined            || dadosViagem.id_destino.length > 1    ||         
+        dadosViagem.id_motorista == ''                      || dadosViagem.id_motorista == undefined            || dadosViagem.id_motoristalength > 1    ||  
+        dadosViagem.id_veiculo == ''                      || dadosViagem.id_veiculo == undefined            || dadosViagem.id_veiculo.length > 1       
          
         
     ){
@@ -130,7 +130,37 @@ const setInserirViagem = async (dadosViagem, contentType) => {
 }
      
 }
+
+const setDeleteViagem = async function(id){
+    try {
+        
+        let idViagem = id;
+
+        if(idViagem == '' || idViagem == undefined || isNaN(idViagem)){
+            return message.ERROR_INVALID_ID;
+        }else{
+            let chamarConst = await viagemDAO.selectViagensByID(idViagem)
+
+            if(chamarConst.length > 0){
+                let dadosViagem = await viagemDAO.deleteViagemByID(id)
+
+                if(dadosViagem){
+                    return message.SUCESS_DELETED_ITEM
+                }else {
+                    return message.ERROR_INTERNAL_SERVER_DB
+                }
+            
+        }else {
+            return message.ERROR_NOT_FOUND
+        }
+    }
+    } catch (error) {
+        console.log(error)
+        return message.ERROR_INTERNAL_SERVER
+    }
+}
 module.exports = {
     getListarViagens,
-    setInserirViagem
+    setInserirViagem,
+    setDeleteViagem
 }

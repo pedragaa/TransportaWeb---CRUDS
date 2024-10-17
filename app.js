@@ -264,6 +264,16 @@ app.post('/v1/transportaweb/newviagem', cors(), bodyParserJSON, async function(r
    response.json(resultDados);
 })
 
+app.delete('/v1/transportaweb/viagem/:id', cors(), async function(request, response, next){
+
+    let idViagem = request.params.id
+
+    let resultDados = await controllerViagem.setDeleteViagem(idViagem);
+
+    response.status(resultDados.status_code);
+    response.json(resultDados);
+})
+
 /*******************************************
  * Intermediárias
  *******************************************/
