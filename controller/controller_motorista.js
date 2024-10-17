@@ -184,6 +184,23 @@ const setInserirNovoMotorista = async (dadosMotorista, contentType) => {
     ){
         return message.ERROR_REQUIRED_FIELDS // 400 Campos obrigatórios / Incorretos
      }else{
+
+          // Variável para validar se poderemos chamar o DAO para inserir os dados
+          let dadosValidated = false;
+
+          // Validação de digitação para a data de relançamento que não é campo obrigatório
+          if( dadosViagem.dia_chegada != null &&
+               dadosViagem.dia_chegada != undefined && 
+               dadosViagem.dia_chegada != ""
+          ){
+              if( dadosViagem.dia_chegada.length != 10 )
+              return message.ERROR_REQUIRED_FIELDS
+              else
+              dadosValidated = true // Se a data estiver com exatos 10 caracteres
+          }else{
+              dadosValidated= true // Se a data não existir nos dados
+          }
+          if(dadosValidated){
    
         // Encaminha os dados para o DAO, inserir no Banco de Dados
         let novoMotorista = await motoristaDAO.insertMotorista(dadosMotorista);
@@ -207,10 +224,12 @@ const setInserirNovoMotorista = async (dadosMotorista, contentType) => {
             return message.ERROR_INTERNAL_SERVER_DB; // 500 Erro na camada do DAO (Banco)
             
     
+        }
          }
        }
     }else{
         return message.ERROR_CONTENT_TYPE // 415 Erro no content type
+    
     }
 }catch(error){
     console.log(error)

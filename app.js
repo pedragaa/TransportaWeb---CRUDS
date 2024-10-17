@@ -39,6 +39,7 @@ const bodyParserJSON = bodyParser.json();
     const controllerMotorista = require('./controller/controller_motorista')    
     const controllerViagem = require('./controller/controller_viagem')
     const motoristaVeiculo = require('./controller/controller_motoristaveiculo')
+    const controllerCarga = require('./controller/controller_carga')
 
 // ************************************************************************************************* //
 //Função para configurar as permissões do cors
@@ -293,6 +294,27 @@ app.post('/v1/transportaweb/motoristaveiculo', cors(), bodyParserJSON, async fun
    response.status(resultDados.status_code);
    response.json(resultDados);
 })
+
+/*******************************************
+ * Cargas
+ *******************************************/
+
+
+app.get('/v1/transportaweb/cargas', cors(), async function(request,response,next){
+    
+    // Chama a função para retornar os dados do filme
+    let dadosCarga = await controllerCarga.getListarCargas();
+
+    // Validação para verificar se existem dados
+    if(dadosCarga){
+        response.json(dadosCarga)
+        response.status(200);
+    }else{
+        response.json({message: 'Nenhum registro encontrado'})
+        response.status()
+    }
+});
+
 
 
 
