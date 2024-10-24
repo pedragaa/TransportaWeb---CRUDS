@@ -1,0 +1,142 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model tbl_avaliacao {
+  id                      Int                       @id @default(autoincrement())
+  avaliacao               Int
+  tbl_motorista_avaliacao tbl_motorista_avaliacao[]
+}
+
+model tbl_carga {
+  id               Int                @id @default(autoincrement())
+  descricao        String             @db.VarChar(255)
+  peso             Decimal            @db.Decimal(10, 2)
+  tipo             String             @db.VarChar(50)
+  quantidade       Int
+  tbl_viagem_carga tbl_viagem_carga[]
+}
+
+model tbl_destino {
+  id          Int          @id @default(autoincrement())
+  rua         String       @db.VarChar(150)
+  numero      String       @db.VarChar(10)
+  complemento String?      @db.VarChar(50)
+  bairro      String       @db.VarChar(50)
+  cidade      String       @db.VarChar(100)
+  estado      String       @db.VarChar(2)
+  cep         String       @db.VarChar(9)
+  tbl_viagem  tbl_viagem[]
+}
+
+model tbl_empresa {
+  id              Int    @id @default(autoincrement())
+  nome            String @db.VarChar(150)
+  razaoSocial     String @db.VarChar(64)
+  cep             String @db.VarChar(9)
+  cnpj            String @db.VarChar(20)
+  numero_telefone String @db.VarChar(11)
+  img_perfil      String @db.Text
+  email           String @db.VarChar(100)
+  senha           String @db.VarChar(32)
+}
+
+model tbl_endereco {
+  id  Int    @id @default(autoincrement())
+  cep String @db.VarChar(8)
+}
+
+model tbl_motorista {
+  id                      Int                       @id @default(autoincrement())
+  nome                    String                    @db.VarChar(150)
+  foto_url                String                    @db.Text
+  data_nascimento         DateTime                  @db.Date
+  cpf                     String                    @db.VarChar(14)
+  email                   String                    @db.VarChar(100)
+  senha                   String                    @db.VarChar(32)
+  tbl_motorista_avaliacao tbl_motorista_avaliacao[]
+  tbl_motorista_veiculo   tbl_motorista_veiculo[]
+  tbl_viagem              tbl_viagem[]
+}
+
+model tbl_motorista_avaliacao {
+  id            Int           @id @default(autoincrement())
+  id_motorista  Int
+  id_avaliacao  Int
+  tbl_motorista tbl_motorista @relation(fields: [id_motorista], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "tbl_motorista_avaliacao_ibfk_1")
+  tbl_avaliacao tbl_avaliacao @relation(fields: [id_avaliacao], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "tbl_motorista_avaliacao_ibfk_2")
+
+  @@index([id_avaliacao], map: "id_avaliacao")
+  @@index([id_motorista], map: "id_motorista")
+}
+
+model tbl_motorista_veiculo {
+  id            Int           @id @default(autoincrement())
+  id_motorista  Int
+  id_veiculo    Int
+  tbl_motorista tbl_motorista @relation(fields: [id_motorista], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "tbl_motorista_veiculo_ibfk_1")
+  tbl_veiculo   tbl_veiculo   @relation(fields: [id_veiculo], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "tbl_motorista_veiculo_ibfk_2")
+
+  @@index([id_motorista], map: "id_motorista")
+  @@index([id_veiculo], map: "id_veiculo")
+}
+
+model tbl_partida {
+  id          Int          @id @default(autoincrement())
+  rua         String       @db.VarChar(150)
+  numero      String       @db.VarChar(10)
+  complemento String?      @db.VarChar(50)
+  bairro      String       @db.VarChar(50)
+  cidade      String       @db.VarChar(100)
+  estado      String       @db.VarChar(2)
+  cep         String       @db.VarChar(9)
+  tbl_viagem  tbl_viagem[]
+}
+
+model tbl_veiculo {
+  id                    Int                     @id @default(autoincrement())
+  placa                 String                  @db.VarChar(9)
+  modelo                String                  @db.VarChar(50)
+  ano                   String                  @db.VarChar(4)
+  tipo                  String                  @db.VarChar(30)
+  capacidade_carga      Decimal                 @db.Decimal(10, 2)
+  tbl_motorista_veiculo tbl_motorista_veiculo[]
+}
+
+model tbl_viagem {
+  id               Int                @id @default(autoincrement())
+  id_viagem        String             @db.VarChar(11)
+  dia_partida      DateTime           @db.Date
+  dia_chegada      DateTime?          @db.Date
+  remetente        String             @db.VarChar(150)
+  destinatario     String             @db.VarChar(150)
+  status_entregue  Boolean
+  id_partida       Int
+  id_destino       Int?
+  id_motorista     Int?
+  tbl_partida      tbl_partida        @relation(fields: [id_partida], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "tbl_viagem_ibfk_1")
+  tbl_destino      tbl_destino?       @relation(fields: [id_destino], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "tbl_viagem_ibfk_2")
+  tbl_motorista    tbl_motorista?     @relation(fields: [id_motorista], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "tbl_viagem_ibfk_3")
+  tbl_viagem_carga tbl_viagem_carga[]
+
+  @@index([id_destino], map: "id_destino")
+  @@index([id_motorista], map: "id_motorista")
+  @@index([id_partida], map: "id_partida")
+}
+
+model tbl_viagem_carga {
+  id         Int        @id @default(autoincrement())
+  id_viagem  Int
+  id_carga   Int
+  tbl_viagem tbl_viagem @relation(fields: [id_viagem], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "tbl_viagem_carga_ibfk_1")
+  tbl_carga  tbl_carga  @relation(fields: [id_carga], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "tbl_viagem_carga_ibfk_2")
+
+  @@index([id_carga], map: "id_carga")
+  @@index([id_viagem], map: "id_viagem")
+}

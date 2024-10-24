@@ -14,7 +14,7 @@ const selectCargas = async function(){
     // Script sql para listar todos os registros
     let sql = `SELECT 
     c.*,  -- Seleciona todas as colunas da tabela tbl_carga
-    tc.nome AS tipo_carga_nome 
+    tc.nome AS nome_tipo 
 FROM 
     tbl_carga c
 INNER JOIN 

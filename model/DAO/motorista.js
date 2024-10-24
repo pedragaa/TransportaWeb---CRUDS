@@ -95,7 +95,7 @@ const insertMotorista =  async function(dadosMotorista) {
     
     try {
 
-     let sql  = `insert into tbl_motorista( nome, data_nascimento, cpf, telefone, cnh, foto_url, email, senha ) values ('${dadosMotorista.nome}', '${dadosMotorista.data_nascimento}', '${dadosMotorista.cpf}', '${dadosMotorista.telefone}','${dadosMotorista.cnh}', '${dadosMotorista.foto_url}', '${dadosMotorista.email}', '${dadosMotorista.senha}' )`
+     let sql  = `insert into tbl_motorista( nome, data_nascimento, cpf, telefone, cnh, foto_url, email, senha, disponibilidade_status ) values ('${dadosMotorista.nome}', '${dadosMotorista.data_nascimento}', '${dadosMotorista.cpf}', '${dadosMotorista.telefone}','${dadosMotorista.cnh}', '${dadosMotorista.foto_url}', '${dadosMotorista.email}', '${dadosMotorista.senha}', '${dadosMotorista.disponibilidade_status}' )`
             
         // Executa o script SQL no banco de dados | Devemos usar execute e não query!
         // Execute deve ser utilizado para insert, update e delete, onde o banco não devolve dados
@@ -120,7 +120,7 @@ const updateMotorista =  async function(id, dadosMotorista) {
 
         let sql;
            
-        sql = `update tbl_motorista set nome = '${dadosMotorista.nome}', data_nascimento = '${dadosMotorista.data_nascimento}',  cpf = '${dadosMotorista.cpf}', telefone = '${dadosMotorista.telefone}', cnh = '${dadosMotorista.cnh}', foto_url = '${dadosMotorista.foto_url}', email = '${dadosMotorista.email}', senha = '${dadosMotorista.senha}' where id = ${id}`
+        sql = `update tbl_motorista set nome = '${dadosMotorista.nome}', data_nascimento = '${dadosMotorista.data_nascimento}',  cpf = '${dadosMotorista.cpf}', telefone = '${dadosMotorista.telefone}', cnh = '${dadosMotorista.cnh}', foto_url = '${dadosMotorista.foto_url}', email = '${dadosMotorista.email}', senha = '${dadosMotorista.senha}', disponibilidade_status = '${dadosMotorista.disponibilidade_status}' where id = ${id}`
               
            // Executa o script SQL no banco de dados | Devemos usar execute e não query!
            // Execute deve ser utilizado para insert, update e delete, onde o banco não devolve dados

@@ -171,37 +171,22 @@ const setInserirNovoMotorista = async (dadosMotorista, contentType) => {
     let resultDadosMotorista = {}
 
     // Validação de campos obrigatórios e consistência de dados
-    if( dadosMotorista.nome == ''                       || dadosMotorista.nome == undefined             || dadosMotorista.nome.length > 256             ||
-        dadosMotorista.data_nascimento == ''            || dadosMotorista.data_nascimento == undefined  || dadosMotorista.data_nascimento.length > 10 ||  
-        dadosMotorista.cpf == ''                        || dadosMotorista.cpf == undefined              || dadosMotorista.cpf.length > 256         || 
-        dadosMotorista.telefone == ''                        || dadosMotorista.telefone == undefined              || dadosMotorista.telefone.length > 256         || 
-        dadosMotorista.cnh == ''                        || dadosMotorista.cnh == undefined              || dadosMotorista.cnh.length > 256         || 
-        dadosMotorista.foto_url == ''                        || dadosMotorista.foto_url == undefined              || dadosMotorista.foto_url.length > 65000         || 
-        dadosMotorista.email == ''                      || dadosMotorista.email == undefined            || dadosMotorista.email.length > 256       || 
-        dadosMotorista.senha == ''                      || dadosMotorista.senha == undefined            || dadosMotorista.senha.length > 256       
-         
-        
-    ){
-        return message.ERROR_REQUIRED_FIELDS // 400 Campos obrigatórios / Incorretos
-     }else{
+if (dadosMotorista.nome == '' || dadosMotorista.nome == undefined || dadosMotorista.nome.length > 256 ||
+    dadosMotorista.data_nascimento == '' || dadosMotorista.data_nascimento == undefined || dadosMotorista.data_nascimento.length > 10 ||  
+    dadosMotorista.cpf == '' || dadosMotorista.cpf == undefined || dadosMotorista.cpf.length > 256 || 
+    dadosMotorista.telefone == '' || dadosMotorista.telefone == undefined || dadosMotorista.telefone.length > 256 || 
+    dadosMotorista.cnh == '' || dadosMotorista.cnh == undefined || dadosMotorista.cnh.length > 256 || 
+    dadosMotorista.foto_url == '' || dadosMotorista.foto_url == undefined || dadosMotorista.foto_url.length > 65000 || 
+    dadosMotorista.email == '' || dadosMotorista.email == undefined || dadosMotorista.email.length > 256 || 
+    dadosMotorista.senha == '' || dadosMotorista.senha == undefined || dadosMotorista.senha.length > 256 
+   // dadosMotorista.disponibilidade_status === undefined || typeof dadosMotorista.disponibilidade_status !== 'boolean'
+){
+    return message.ERROR_REQUIRED_FIELDS;
+}
+else{
 
-          // Variável para validar se poderemos chamar o DAO para inserir os dados
-          let dadosValidated = false;
+    
 
-          // Validação de digitação para a data de relançamento que não é campo obrigatório
-          if( dadosViagem.dia_chegada != null &&
-               dadosViagem.dia_chegada != undefined && 
-               dadosViagem.dia_chegada != ""
-          ){
-              if( dadosViagem.dia_chegada.length != 10 )
-              return message.ERROR_REQUIRED_FIELDS
-              else
-              dadosValidated = true // Se a data estiver com exatos 10 caracteres
-          }else{
-              dadosValidated= true // Se a data não existir nos dados
-          }
-          if(dadosValidated){
-   
         // Encaminha os dados para o DAO, inserir no Banco de Dados
         let novoMotorista = await motoristaDAO.insertMotorista(dadosMotorista);
 
@@ -226,7 +211,7 @@ const setInserirNovoMotorista = async (dadosMotorista, contentType) => {
     
         }
          }
-       }
+       
     }else{
         return message.ERROR_CONTENT_TYPE // 415 Erro no content type
     
@@ -260,7 +245,8 @@ const setUpdateMotorista = async function(id, contentType, dadosMotorista){
            dadosMotorista.cnh == ''                        || dadosMotorista.cnh == undefined              || dadosMotorista.cnh.length > 256         || 
            dadosMotorista.foto_url == ''                        || dadosMotorista.foto_url == undefined              || dadosMotorista.foto_url.length > 65000         || 
            dadosMotorista.email == ''                      || dadosMotorista.email == undefined            || dadosMotorista.email.length > 256       || 
-           dadosMotorista.senha == ''                      || dadosMotorista.senha == undefined            || dadosMotorista.senha.length > 256    
+           dadosMotorista.senha == ''                      || dadosMotorista.senha == undefined            || dadosMotorista.senha.length > 256         
+           //dadosMotorista.disponibilidade_status == ''                      || dadosMotorista.disponibilidade_status == undefined            || dadosMotorista.disponibilidade_status.length > 1       
             
     
         ){
