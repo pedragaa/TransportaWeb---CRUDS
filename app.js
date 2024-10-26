@@ -1,3 +1,4 @@
+
 /********************************************************
  * Objetivo: Arquivo para realizar as requisições de filmes
  * Data: 30/01/2024
@@ -40,6 +41,9 @@ const bodyParserJSON = bodyParser.json();
     const controllerViagem = require('./controller/controller_viagem')
     const motoristaVeiculo = require('./controller/controller_motoristaveiculo')
     const controllerCarga = require('./controller/controller_carga')
+    const controllerVeiculo = require('./controller/controller_veiculo.js')
+    const controllerDestino = require('./controller/controller_destino.js')
+    const controllerPartida = require('./controller/controller_partida.js')
 
 // ************************************************************************************************* //
 //Função para configurar as permissões do cors
@@ -316,7 +320,73 @@ app.get('/v1/transportaweb/cargas', cors(), async function(request,response,next
 });
 
 
+/*******************************************************************/
+//                           Veiculosss                            //
+/*******************************************************************/
 
+
+app.get('/v1/transportaweb/veiculos', cors(), async function(request,response,next){
+    
+    // Chama a função para retornar os dados do filme
+    let dadosVeiculo = await controllerVeiculo.getListarVeiculos();
+
+    // Validação para verificar se existem dados
+    if(dadosVeiculo){
+        response.json(dadosVeiculo)
+        response.status(200);
+    }else{
+        response.json({message: 'Nenhum registro encontrado'})
+        response.status()
+    }
+});
+
+app.get('/v1/transportaweb/veiculo/:id', cors(), async function(request, response, next){
+
+    let idveiculo = request.params.id
+
+    let resultDados = await controllerVeiculo.getListarveiculoBYID(idveiculo);
+
+    response.status(resultDados.status_code);
+    response.json(resultDados);
+})
+/*******************************************************************/
+//                           DEstinosos                            //
+/*******************************************************************/
+
+
+app.get('/v1/transportaweb/destinos', cors(), async function(request,response,next){
+    
+    // Chama a função para retornar os dados do filme
+    let dadosDestino = await controllerDestino.getListarDestinos();
+
+    // Validação para verificar se existem dados
+    if(dadosDestino){
+        response.json(dadosDestino)
+        response.status(200);
+    }else{
+        response.json({message: 'Nenhum registro encontrado'})
+        response.status()
+    }
+});
+/*******************************************************************/
+//                           Partidasss                            //
+/*******************************************************************/
+
+
+app.get('/v1/transportaweb/partidas', cors(), async function(request,response,next){
+    
+    // Chama a função para retornar os dados do filme
+    let dadosPartida = await controllerPartida.getListarPartidas();
+
+    // Validação para verificar se existem dados
+    if(dadosPartida){
+        response.json(dadosPartida)
+        response.status(200);
+    }else{
+        response.json({message: 'Nenhum registro encontrado'})
+        response.status()
+    }
+});
 
 app.listen(8080, function(){
     console.log('Tá funcionando, testa aí');
