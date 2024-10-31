@@ -278,6 +278,28 @@ app.delete('/v1/transportaweb/viagem/:id', cors(), async function(request, respo
     response.status(resultDados.status_code);
     response.json(resultDados);
 })
+app.get('/v1/transportaweb/viagem/:id', cors(), async function(request, response, next){
+    // Recebe o id da requisição 
+    let idViagem = request.params.id;
+
+ 
+    let dadosViagem = await controllerViagem.getListarViagemById(idViagem);
+
+     response.status(dadosViagem.status_code);
+    response.json(dadosViagem);
+   
+});
+
+app.get('/v1/transportaweb/viagens/filtro', cors(), async function (request, response, next) {
+    let idviagem = request.query.id_viagem;
+
+    console.log(idviagem);
+
+    let dadosViagem = await controllerViagem.getBuscarViagemByNome(idviagem);
+
+    response.status(dadosViagem.status_code || 500);
+    response.json(dadosViagem);
+});
 
 /*******************************************
  * Intermediárias

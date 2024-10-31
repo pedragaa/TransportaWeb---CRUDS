@@ -77,12 +77,13 @@ const selectViagensByID = async function(id){
       }
 }
 
-const selectViagemByNome = async function (nome) {
+const selectViagemByNome = async function (id_viagem) {
     try {
-        let sql = `select * from tbl_viagens where nome like "%${nome}%"`
+        let sql = `select * from tbl_viagem where id_viagem like "%${id_viagem}%"`
         let rsViagrn = await prisma.$queryRawUnsafe(sql)
         return rsViagrn
     } catch (error) {
+        console.log(error)
         return false
     }
 }
