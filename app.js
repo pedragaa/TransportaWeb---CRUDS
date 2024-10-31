@@ -163,6 +163,16 @@ app.get('/v1/transportaweb/motoristas', cors(), async function(request,response,
         response.status()
     }
 });
+app.get('/v1/transportaweb/motoristas/filtro', cors(), async function (request, response, next) {
+    let nomeMotorista = request.query.nome;
+
+    console.log(nomeMotorista);
+
+    let dadosMotorista = await controllerMotorista.getBuscarMotoristasNome(nomeMotorista);
+
+    response.status(dadosMotorista.status_code || 500);
+    response.json(dadosMotorista);
+});
 
 app.get('/v1/transportaweb/motorista/:id', cors(), async function(request, response, next){
 
