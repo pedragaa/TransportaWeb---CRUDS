@@ -29,6 +29,27 @@ const selectPartida = async function(){
         return false
 
 }
+const selectPartidaById = async function(){
+    
+    // Script sql para listar todos os registros
+    let sql = `select * from tbl_partida where id = ${id}`; 
+
+
+    // $queryRawUnsafe(sql)  = Encaminha apenas a variável
+    // $queryRaw('select * from tbl_atores) = Encaminha o script do banco 
+
+    // Executa o script no banco de dados e recebe o retorno dos dados da variavel rsEmpresas
+    let rsPartidas = await prisma.$queryRawUnsafe(sql)
+     // Para usar await a função necessita ser async(async function)
+
+    // Tratamento de erro para retornar dados ou retornar false
+     if(rsPartidas.length > 0)
+     return rsPartidas;
+     else
+        return false
+}
+
 module.exports = {
-    selectPartida
+    selectPartida,
+    selectPartidaById
 }

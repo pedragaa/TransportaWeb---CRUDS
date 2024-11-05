@@ -400,6 +400,18 @@ app.get('/v1/transportaweb/destinos', cors(), async function(request,response,ne
         response.status()
     }
 });
+
+app.get('/v1/transportaweb/destino/:id', cors(), async function(request, response, next){
+    // Recebe o id da requisição 
+    let idDestino = request.params.id;
+
+ 
+    let dadosDestino = await controllerDestino.getListarDestinosById(idDestino);
+
+     response.status(dadosDestino.status_code);
+    response.json(dadosDestino);
+   
+});
 /*******************************************************************/
 //                           Partidasss                            //
 /*******************************************************************/
@@ -418,6 +430,18 @@ app.get('/v1/transportaweb/partidas', cors(), async function(request,response,ne
         response.json({message: 'Nenhum registro encontrado'})
         response.status()
     }
+});
+
+app.get('/v1/transportaweb/partida/:id', cors(), async function(request, response, next){
+    // Recebe o id da requisição 
+    let idPartida = request.params.id;
+
+ 
+    let dadosPartida = await controllerPartida.getListarPartidasByID(idPartida);
+
+     response.status(dadosPartida.status_code);
+    response.json(dadosPartida);
+   
 });
 
 app.listen(8080, function(){

@@ -44,6 +44,41 @@ const getListarPartidas = async function(){
 }
 }
 }
+const getListarPartidasByID = async function (id){
+   
+    // Recebe o id do ator
+    let idPartida = id;
+
+    // Variável para criar o json do atores
+    let partidaJson = {};
+
+    // Validação para ID vazio, indefinido ou não numérico
+    if (idPartida == '' || idPartida == undefined || isNaN(idPartida)){
+        return message.ERROR_INVALID_ID;
+    }else{
+
+        // Solicita para o DAO a busca do ator pelo iD
+        let dadosPartida = await partidaDAO.selectPartidaById(id)
+
+
+        // Validação para verificar se existem dados encontrados
+        if(dadosPartida){
+            // Validação para verificar se existem dados de retorno
+            if(dadosPartida.length > 0){
+            partidaJson.partida = dadosPartida;
+            partidaJson.status_code = 200
+
+            return partidaJson; // 200
+        }else{
+            return message.ERROR_NOT_FOUND; //404
+        }
+        }else{
+            return message.ERROR_INTERNAL_SERVER_DB; // 500
+        }
+    }
+
+
+}
 module.exports = {
-    getListarPartidas
+    getListarPartidas,getListarPartidasByID
 }
