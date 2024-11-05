@@ -29,7 +29,7 @@ const selectDestinos = async function(){
         return false
 
 }
-const selectDestinoById = async function(){
+const selectDestinoById = async function(id){
     
     // Script sql para listar todos os registros
     let sql = `select * from tbl_destino where id = ${id}`; 

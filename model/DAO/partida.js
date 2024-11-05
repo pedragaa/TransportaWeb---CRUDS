@@ -29,7 +29,7 @@ const selectPartida = async function(){
         return false
 
 }
-const selectPartidaById = async function(){
+const selectPartidaById = async function(id){
     
     // Script sql para listar todos os registros
     let sql = `select * from tbl_partida where id = ${id}`; 
