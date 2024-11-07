@@ -278,6 +278,19 @@ app.post('/v1/transportaweb/newviagem', cors(), bodyParserJSON, async function(r
    response.status(resultDados.status_code);
    response.json(resultDados);
 })
+// Para o motorista poder editar seu perfil
+app.put('/v1/transportaweb/editviagem/:id', cors(), bodyParserJSON, async function(request,response, next){
+    let idViagem = request.params.id
+    let contentType = request.headers['content-type']
+    let dadosBody = request.body
+
+    let dadosViagem = await controllerViagem.setUpdateviagem(idViagem, contentType, dadosBody);
+
+    response.status(dadosViagem.status_code);
+    response.json(dadosViagem)
+})
+
+
 
 app.delete('/v1/transportaweb/viagem/:id', cors(), async function(request, response, next){
 
@@ -350,6 +363,16 @@ app.get('/v1/transportaweb/cargas', cors(), async function(request,response,next
         response.status()
     }
 });
+
+app.get('/v1/transportaweb/carga/:id', cors(), async function(request, response, next){
+
+    let idCarga = request.params.id
+
+    let resultDados = await controllerCarga.getListarCargaById(idCarga);
+
+    response.status(resultDados.status_code);
+    response.json(resultDados);
+})
 
 
 /*******************************************************************/

@@ -95,7 +95,7 @@ const deleteEmpresaById = async function(id){
 const insertEmpresa =  async function(dadosEmpresa) {
     try {
 
-     let sql  = `insert into tbl_empresa (nome, razaoSocial, cep, cnpj, numero_telefone, img_perfil, email, senha) values ('${dadosEmpresa.nome}', '${dadosEmpresa.razaoSocial}', '${dadosEmpresa.cep}', '${dadosEmpresa.cnpj}', '${dadosEmpresa.numero_telefone}', '${dadosEmpresa.img_perfil}', '${dadosEmpresa.email}', '${dadosEmpresa.senha}' )`
+     let sql  = `insert into tbl_empresa (nome, razaoSocial, cep, cnpj, numero_telefone, foto_url, email, senha) values ('${dadosEmpresa.nome}', '${dadosEmpresa.razaoSocial}', '${dadosEmpresa.cep}', '${dadosEmpresa.cnpj}', '${dadosEmpresa.numero_telefone}', '${dadosEmpresa.foto_url}', '${dadosEmpresa.email}', '${dadosEmpresa.senha}' )`
         // Executa o script SQL no banco de dados | Devemos usar execute e não query!
         // Execute deve ser utilizado para insert, update e delete, onde o banco não devolve dados
         let result = await prisma.$executeRawUnsafe(sql);
@@ -119,7 +119,7 @@ const updateEmpresa =  async function(id, dadosEmpresa) {
 
         let sql;
            
-        sql = `update tbl_empresa set nome = '${dadosEmpresa.nome}', razaoSocial = '${dadosEmpresa.razaoSocial}', cep = '${dadosEmpresa.cep}',  cnpj = '${dadosEmpresa.cnpj}', numero_telefone = '${dadosEmpresa.numero_telefone}', img_perfil = '${dadosEmpresa.img_perfil}', email = '${dadosEmpresa.email}', senha ='${dadosEmpresa.senha}' where id = ${id}`
+        sql = `update tbl_empresa set nome = '${dadosEmpresa.nome}', razaoSocial = '${dadosEmpresa.razaoSocial}', cep = '${dadosEmpresa.cep}',  cnpj = '${dadosEmpresa.cnpj}', numero_telefone = '${dadosEmpresa.numero_telefone}', foto_url = '${dadosEmpresa.foto_url}', email = '${dadosEmpresa.email}', senha ='${dadosEmpresa.senha}' where id = ${id}`
               
            // Executa o script SQL no banco de dados | Devemos usar execute e não query!
            // Execute deve ser utilizado para insert, update e delete, onde o banco não devolve dados

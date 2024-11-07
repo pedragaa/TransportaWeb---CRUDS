@@ -12,29 +12,42 @@ const prisma = new PrismaClient();
 const selectCargas = async function(){
 
     // Script sql para listar todos os registros
-    let sql = `SELECT 
-    c.*,  -- Seleciona todas as colunas da tabela tbl_carga
-    tc.nome AS nome_tipo 
-FROM 
-    tbl_carga c
-INNER JOIN 
-    tbl_tipo_carga tc ON c.id_tipo_carga = tc.id; 
-`;
+    let sql = `select * from tbl_carga order by id desc`;
 
     // $queryRawUnsafe(sql)  = Encaminha apenas a variável
     // $queryRaw('select * from tbl_atores) = Encaminha o script do banco 
 
     // Executa o script no banco de dados e recebe o retorno dos dados da variavel rsEmpresas
-    let rsEmpresas = await prisma.$queryRawUnsafe(sql)
+    let rsCarga = await prisma.$queryRawUnsafe(sql)
      // Para usar await a função necessita ser async(async function)
 
     // Tratamento de erro para retornar dados ou retornar false
-     if(rsEmpresas.length > 0)
-     return rsEmpresas;
+     if(rsCarga.length > 0)
+     return rsCarga;
+     else
+        return false
+
+}
+const selectCargaByID = async function(id){
+
+    // Script sql para listar todos os registros
+    let sql = `select * from tbl_carga where id = ${id}`;
+
+    // $queryRawUnsafe(sql)  = Encaminha apenas a variável
+    // $queryRaw('select * from tbl_atores) = Encaminha o script do banco 
+
+    // Executa o script no banco de dados e recebe o retorno dos dados da variavel rsCarga
+    let rsCarga = await prisma.$queryRawUnsafe(sql)
+     // Para usar await a função necessita ser async(async function)
+
+    // Tratamento de erro para retornar dados ou retornar false
+     if(rsCarga.length > 0)
+     return rsCarga;
      else
         return false
 
 }
 module.exports = {
-    selectCargas
+    selectCargas,
+    selectCargaByID
 }

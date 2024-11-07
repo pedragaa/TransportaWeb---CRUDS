@@ -175,7 +175,7 @@ const setInserirNovaEmpresa = async (dadosEmpresa, contentType) => {
         dadosEmpresa.cep == ''                    || dadosEmpresa.cep == undefined     ||    dadosEmpresa.cep.length > 256        ||  
         dadosEmpresa.cnpj == ''                    || dadosEmpresa.cnpj == undefined     ||    dadosEmpresa.cnpj.length > 256        || 
         dadosEmpresa.numero_telefone == ''           || dadosEmpresa.numero_telefone == undefined     ||    dadosEmpresa.numero_telefone.length > 256  ||
-        dadosEmpresa.img_perfil == ''           || dadosEmpresa.img_perfil == undefined     ||    dadosEmpresa.img_perfil.length > 65000  ||
+        dadosEmpresa.foto_url == ''           || dadosEmpresa.foto_url == undefined     ||    dadosEmpresa.foto_url.length > 65000  ||
         dadosEmpresa.email == ''            || dadosEmpresa.email == undefined            || dadosEmpresa.email.length > 256       || 
         dadosEmpresa.senha == ''         || dadosEmpresa.senha == undefined   || dadosEmpresa.senha.length > 256
          
@@ -240,7 +240,7 @@ const setUpdateEMPRESA = async function(id, contentType, dadosEmpresa){
             dadosEmpresa.cep == ''                    || dadosEmpresa.cep == undefined     ||    dadosEmpresa.cep.length > 9        ||  
             dadosEmpresa.cnpj == ''                    || dadosEmpresa.cnpj == undefined     ||    dadosEmpresa.cnpj.length > 256        || 
             dadosEmpresa.numero_telefone == ''           || dadosEmpresa.numero_telefone == undefined     ||    dadosEmpresa.numero_telefone.length > 256  ||
-            dadosEmpresa.img_perfil == ''           || dadosEmpresa.img_perfil == undefined     ||    dadosEmpresa.img_perfil.length > 65000  ||
+            dadosEmpresa.foto_url == ''           || dadosEmpresa.foto_url == undefined     ||    dadosEmpresa.foto_url.length > 65000  ||
             dadosEmpresa.email == ''            || dadosEmpresa.email == undefined            || dadosEmpresa.email.length > 256       || 
             dadosEmpresa.senha == ''         || dadosEmpresa.senha == undefined   || dadosEmpresa.senha.length > 256
             
