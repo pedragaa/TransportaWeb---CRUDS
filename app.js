@@ -39,7 +39,7 @@ const bodyParserJSON = bodyParser.json();
     const controllerEmpresa = require('./controller/controller_empresa');
     const controllerMotorista = require('./controller/controller_motorista')    
     const controllerViagem = require('./controller/controller_viagem')
-    const motoristaVeiculo = require('./controller/controller_motoristaveiculo')
+    const motoristaAvaliacao = require('./controller/controller_motoristaavaliacao.js')
     const controllerCarga = require('./controller/controller_carga')
     const controllerVeiculo = require('./controller/controller_veiculo.js')
     const controllerDestino = require('./controller/controller_destino.js')
@@ -339,6 +339,23 @@ app.get('/v1/transportaweb/viagens/filtro', cors(), async function (request, res
 /*******************************************
  * Intermediárias
  *******************************************/
+
+app.get('/v1/transportaweb/motorista_avaliacoes', cors(), async function(request,response,next){
+    
+    // Chama a função para retornar os dados do filme
+    let dadosMotorista = await motoristaAvaliacao.getListarMotoristaAvaliacao();
+
+    // Validação para verificar se existem dados
+    if(dadosMotorista){
+        response.json(dadosMotorista)
+        response.status(200);
+    }else{
+        response.json({message: 'Nenhum registro encontrado'})
+        response.status()
+    }
+});
+
+
 
 app.get('/v1/transportaweb/equipe/:id', cors(), async function(request, response, next){
     // Recebe o id da requisição 

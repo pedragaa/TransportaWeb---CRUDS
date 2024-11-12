@@ -9,9 +9,9 @@ const { PrismaClient } = require ('@prisma/client')
 // Instaciando o o bjeto prisma com as caracteristicas do prisma client
 const prisma = new PrismaClient();
 
-const selectAllMotoristasVeiculos = async function(){
+const selectAllMotoristasAvaliacoes = async function(){
 
-    let sql = 'select * from tbl_motorista_veiculo order by id desc';
+    let sql = 'select * from tbl_motorista_avaliacao order by id desc';
     let rsTblIntermediaria = await prisma.$queryRawUnsafe(sql)
      if(rsTblIntermediaria.length > 0)
      return rsTblIntermediaria;
@@ -19,9 +19,9 @@ const selectAllMotoristasVeiculos = async function(){
         return false
 
 }
-const selectMotoristaVeiculoById = async function(id){
+const selectMotoristaAvaliacaoById = async function(id){
   try {
-      let sql = `select * from  tbl_motorista_veiculo where id = ${id}`;
+      let sql = `select * from  tbl_motorista_avaliacao where id = ${id}`;
       let rsTblIntermediaria = await prisma.$queryRawUnsafe(sql);
           return rsTblIntermediaria;
       } catch (error) {
@@ -29,11 +29,11 @@ const selectMotoristaVeiculoById = async function(id){
           
       }
 }
-const selectIdMotoristaVeiculo = async function() {
+const selectIdMotoristaAvaliacao = async function() {
 
     try {
 
-    let sql = `select CAST(last_insert_id() as DECIMAL) as id from tbl_motorista_veiculo limit 1`;
+    let sql = `select CAST(last_insert_id() as DECIMAL) as id from tbl_motorista_avaliacao limit 1`;
 
     let motoristaID = await prisma.$queryRawUnsafe(sql)
      return motoristaID
@@ -44,11 +44,11 @@ const selectIdMotoristaVeiculo = async function() {
 }
 
 
-const insertMotoristaVeiculo =  async function(dadosMotoristaVeiculo) {
+const insertMotoristaAvaliacao =  async function(dadosMotoristaAvaliacao) {
     
     try {
 
-     let sql  = `insert into tbl_motorista_veiculo(id_motorista, id_veiculo) values ('${dadosMotoristaVeiculo.id_motorista}', '${dadosMotoristaVeiculo.id_veiculo}')`  
+     let sql  = `insert into tbl_motorista_avaliacao(id_motorista, id_avaliacao) values ('${dadosMotoristaAvaliacao.id_motorista}', '${dadosMotoristaAvaliacao.id_avaliacao}')`  
             
         // Executa o script SQL no banco de dados | Devemos usar execute e não query!
         // Execute deve ser utilizado para insert, update e delete, onde o banco não devolve dados
@@ -68,8 +68,8 @@ const insertMotoristaVeiculo =  async function(dadosMotoristaVeiculo) {
 }
 
 module.exports = {
-    selectAllMotoristasVeiculos,
-    selectMotoristaVeiculoById,
-    insertMotoristaVeiculo,
-    selectIdMotoristaVeiculo
+    insertMotoristaAvaliacao,
+    selectAllMotoristasAvaliacoes,
+    selectIdMotoristaAvaliacao,
+    selectMotoristaAvaliacaoById
 }

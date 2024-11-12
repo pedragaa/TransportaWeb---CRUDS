@@ -7,31 +7,31 @@
 const message = require('../modulo/config.js')
 
 // Import do arquivo DAO para manipular dados do banco de dados
-const motoristaveiculoDAO = require('../model/DAO/motoristaveiculo.js');
+const motoristaveiculoDAO = require('../model/DAO/motoristaavaliacao.js');
 
 
 
-const getListarMotoristaVeiculo = async function(){
+const getListarMotoristaAvaliacao = async function(){
     
-    let listaMotoristasVeiculos;
+    let listaMotoristaAvaliacao;
     // Cria uma variavel do tipo json
     let motoristaVeiculoJson = {};
 
-    if ((listaMotoristasVeiculos)){
-        return listaMotoristasVeiculos;
+    if ((listaMotoristaAvaliacao)){
+        return listaMotoristaAvaliacao;
     }else{
     
     // Chama a função do DAO para buscar os dados do banco de dados
-    let dadosMotoristaVeiculo = await motoristaveiculoDAO.selectAllMotoristasVeiculos();
+    let dadosMotoristaAvaliacao = await motoristaveiculoDAO.selectAllMotoristasAvaliacoes();
 
     // Verifica se existem dados retornados do DAO
-    if(dadosMotoristaVeiculo){
-        if(dadosMotoristaVeiculo.length > 0){
-            if(dadosMotoristaVeiculo.length > 0){
+    if(dadosMotoristaAvaliacao){
+        if(dadosMotoristaAvaliacao.length > 0){
+            if(dadosMotoristaAvaliacao.length > 0){
             
         // Montando a estrutura do JSOn
-        motoristaVeiculoJson.motoristas = dadosMotoristaVeiculo;
-        motoristaVeiculoJson.quantidade = dadosMotoristaVeiculo.length;
+        motoristaVeiculoJson.motoristas_avaliacoes = dadosMotoristaAvaliacao;
+        motoristaVeiculoJson.quantidade = dadosMotoristaAvaliacao.length;
         motoristaVeiculoJson.status_code = 200;
         // Retorna o JSON montado
         return motoristaVeiculoJson; // 200
@@ -45,7 +45,7 @@ const getListarMotoristaVeiculo = async function(){
 }
 }
 }
-const getListarMotoristaVeiculoByID = async function (id){
+const getListarMotoristaAvaliacaoByID = async function (id){
    
     // Recebe o id do ator
     let idMotoristaVeiculo = id;
@@ -137,7 +137,7 @@ const setInserirNovoMotoristaVeiculo = async (dadosMotoristaVeiculo, contentType
 }
 
 module.exports = {
-    getListarMotoristaVeiculo,
-    getListarMotoristaVeiculoByID,
+    getListarMotoristaAvaliacao,
+    getListarMotoristaAvaliacaoByID,
     setInserirNovoMotoristaVeiculo
 }

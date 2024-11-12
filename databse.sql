@@ -376,7 +376,9 @@ insert into tbl_equipe (id_motorista, id_empresa) values
 (2,2),
 (3,3),
 (4,4),
-(5,5);
+(5,5),
+(21,1);
+
 SELECT m.nome AS nome_motorista
 FROM tbl_equipe te
 JOIN tbl_motorista m ON te.id_motorista = m.id

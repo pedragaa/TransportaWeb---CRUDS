@@ -190,6 +190,8 @@ else{
         // Encaminha os dados para o DAO, inserir no Banco de Dados
         let novoMotorista = await motoristaDAO.insertMotorista(dadosMotorista);
 
+        
+
         let idSelect = await motoristaDAO.selectIdMotorista();
 
         dadosMotorista.id = Number (idSelect[0].id)
