@@ -312,7 +312,7 @@ app.get('/v1/transportaweb/viagem/:id', cors(), async function(request, response
     response.json(dadosViagem);
    
 });
-app.get('/v1/transportaweb/viagem/:id', cors(), async function(request, response, next){
+app.get('/v1/transportaweb/empresaviagem/:id', cors(), async function(request, response, next){
     // Recebe o id da requisição 
     let idViagem = request.params.id;
 
