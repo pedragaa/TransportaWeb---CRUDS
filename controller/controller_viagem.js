@@ -105,7 +105,7 @@ const getListarViagemByIdEmpresa = async function (id){
         if(dadosViagem){
             // Validação para verificar se existem dados de retorno
             if(dadosViagem.length > 0){
-            viagemJson.motorista = dadosViagem;
+            viagemJson.empresa_viagem = dadosViagem;
             viagemJson.status_code = 200
 
             return viagemJson; // 200
