@@ -44,6 +44,7 @@ const bodyParserJSON = bodyParser.json();
     const controllerVeiculo = require('./controller/controller_veiculo.js')
     const controllerDestino = require('./controller/controller_destino.js')
     const controllerPartida = require('./controller/controller_partida.js')
+    const controllerEquipe = require('./controller/controller_equipe.js')
 
 // ************************************************************************************************* //
 //Função para configurar as permissões do cors
@@ -339,21 +340,28 @@ app.get('/v1/transportaweb/viagens/filtro', cors(), async function (request, res
  * Intermediárias
  *******************************************/
 
+app.get('/v1/transportaweb/equipe/:id', cors(), async function(request, response, next){
+    // Recebe o id da requisição 
+    let idEquipe = request.params.id;
 
-app.post('/v1/transportaweb/motoristaveiculo', cors(), bodyParserJSON, async function(request, response,next){
+ 
+    let dadosViagem = await controllerEquipe.getListarEquipeById(idEquipe);
 
-    // Recebe o content-type da requisição (API deve receber application/json )
-   let contentType = request.headers['content-type'];
-
-   // Recebe os dados encaminhados na requisição do body (JSON)
-   let dadosBody = request.body;
+     response.status(dadosViagem.status_code);
+    response.json(dadosViagem);
    
-   // Encaminha os dados da requisição para a controller enviar para o banco de dados
-   let resultDados = await motoristaVeiculo.setInserirNovoMotoristaVeiculo(dadosBody, contentType);
+});
+app.get('/v1/transportaweb/motoristaequipe/:id', cors(), async function(request, response, next){
+    // Recebe o id da requisição 
+    let idEquipe = request.params.id;
 
-   response.status(resultDados.status_code);
-   response.json(resultDados);
-})
+ 
+    let dadosEquipe = await controllerEquipe.getListarMotoristaEquipeById(idEquipe);
+
+     response.status(dadosEquipe.status_code);
+    response.json(dadosEquipe);
+   
+});
 
 /*******************************************
  * Cargas
