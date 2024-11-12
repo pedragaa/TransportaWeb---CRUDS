@@ -47,7 +47,7 @@ const selectEquipeById = async function(id){
 const selectMotoristaEquipeById = async function(id){
     try {
         // Realiza a busca do ator pelo ID
-        let sql = `SELECT m.nome AS nome_motorista
+        let sql = `SELECT m.nome AS nome_motorista, m.cpf, m.telefone
 FROM tbl_equipe te
 JOIN tbl_motorista m ON te.id_motorista = m.id
 WHERE te.id_empresa = ${id}`;
