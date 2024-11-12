@@ -47,16 +47,14 @@ const selectEquipeById = async function(id){
 const selectMotoristaEquipeById = async function(id){
     try {
         // Realiza a busca do ator pelo ID
-        let sql = `SELECT m.nome AS nome_motorista, m.cpf, m.telefone
+        let sql = `SELECT m.nome AS nome_motorista, m.cpf, m.telefone, m.foto-url
 FROM tbl_equipe te
 JOIN tbl_motorista m ON te.id_motorista = m.id
 WHERE te.id_empresa = ${id}`;
     
         // Executa no banco de dados o script sql
         let rsEmpresas = await prisma.$queryRawUnsafe(sql);
-  
             return rsEmpresas;
-    
         } catch (error) {
             return false;
             
