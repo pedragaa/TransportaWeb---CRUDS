@@ -82,6 +82,43 @@ const getListarViagemById = async function (id){
 
 
 }
+
+
+const getListarViagemByIdEmpresa = async function (id){
+   
+    // Recebe o id do ator
+    let idViagem = id;
+
+    // Variável para criar o json do atores
+    let viagemJson = {};
+
+    // Validação para ID vazio, indefinido ou não numérico
+    if (idViagem == '' || idViagem == undefined || isNaN(idViagem)){
+        return message.ERROR_INVALID_ID;
+    }else{
+
+        // Solicita para o DAO a busca do ator pelo iD
+        let dadosViagem = await viagemDAO.selectViagensByIdEmpresa(id)
+
+
+        // Validação para verificar se existem dados encontrados
+        if(dadosViagem){
+            // Validação para verificar se existem dados de retorno
+            if(dadosViagem.length > 0){
+            viagemJson.motorista = dadosViagem;
+            viagemJson.status_code = 200
+
+            return viagemJson; // 200
+        }else{
+            return message.ERROR_NOT_FOUND; //404
+        }
+        }else{
+            return message.ERROR_INTERNAL_SERVER_DB; // 500
+        }
+    }
+
+
+}
 const getBuscarViagemByNome = async function (id_viagem){
     try {
         
@@ -281,5 +318,6 @@ module.exports = {
     setDeleteViagem,
     getListarViagemById,
     getBuscarViagemByNome,
-    setUpdateviagem
+    setUpdateviagem,
+    getListarViagemByIdEmpresa
 }

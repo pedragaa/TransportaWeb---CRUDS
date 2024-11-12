@@ -76,6 +76,17 @@ const selectViagensByID = async function(id){
           
       }
 }
+const selectViagensByIdEmpresa = async function(id){
+    try {
+        let sql = `select * from tbl_viagem where id_empresa = ${id}`;
+        let rsViagrn = await prisma.$queryRawUnsafe(sql);
+            return rsViagrn;
+        } catch (error) {
+            return false;
+            
+        }
+  }
+  
 
 const selectViagemByNome = async function (id_viagem) {
     try {
@@ -169,5 +180,6 @@ module.exports = {
     insertViagem,
     updateViagem,
     selectIDViagem,
+    selectViagensByIdEmpresa
     //selectMotoristaViagem
 }
