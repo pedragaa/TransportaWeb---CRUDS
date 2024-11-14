@@ -216,6 +216,8 @@ VALUES
 
 ('50751-310');
 
+drop table tbl_viagem;
+
 CREATE TABLE tbl_viagem(
 
 id int primary key auto_increment not null,
@@ -241,6 +243,8 @@ id_destino int null,
 id_motorista int null,
 
 id_veiculo int null,
+id_tipo_carga int null,
+id_empresa int null,
 
 foreign key(id_partida) references tbl_partida(id) ON DELETE CASCADE,
 
@@ -248,51 +252,58 @@ FOREIGN KEY(id_destino) REFERENCES tbl_destino(id) ON DELETE CASCADE,
 
 FOREIGN KEY(id_motorista) REFERENCES tbl_motorista(id) ON DELETE CASCADE,
 
-FOREIGN KEY(id_veiculo) REFERENCES tbl_veiculo(id) ON DELETE CASCADE
+FOREIGN KEY(id_veiculo) REFERENCES tbl_veiculo(id) ON DELETE CASCADE,
+FOREIGN KEY(id_tipo_carga) REFERENCES tbl_tipo_carga(id) ON DELETE CASCADE,
+FOREIGN KEY(id_empresa) REFERENCES tbl_empresa(id) ON DELETE CASCADE
+
 
 );
 
+drop table tbl_viagem;
+
 INSERT INTO tbl_viagem (
 
-id_viagem, dia_partida, horario_partida, dia_chegada, remetente, destinatario, status_entregue, id_partida, id_destino, id_motorista, id_veiculo
+id_viagem, dia_partida, horario_partida, dia_chegada, remetente, destinatario, status_entregue, id_partida, id_destino, id_motorista, id_veiculo, id_tipo_carga, id_empresa
 
 )
 
 VALUES
 
-('412-639-JTO', '2024-10-10', '08:30:00', '2024-10-11', 'Empresa Alpha', 'Cliente A', true, 1, 1, 1, 1),
+('412-639-JTO', '2024-10-10', '08:30:00', '2024-10-11', 'Empresa Alpha', 'Cliente A', true, 1, 1, 1, 1, 1, 1),
 
-('312-539-BKU', '2024-10-12', '09:00:00', '2024-10-13', 'Empresa Beta', 'Cliente B', true, 2, 2, 2, 2),
+('312-539-BKU', '2024-10-12', '09:00:00', '2024-10-13', 'Empresa Beta', 'Cliente B', true, 2, 2, 2, 2, 2, 2),
 
-('612-839-MQZ', '2024-10-13', '10:15:00', NULL, 'Empresa Gamma', 'Cliente C', false, 3, 3, 3, 3),
+('612-839-MQZ', '2024-10-13', '10:15:00', NULL, 'Empresa Gamma', 'Cliente C', false, 3, 3, 3, 3, 3, 3),
 
-('412-739-LNW', '2024-10-14', '14:00:00', '2024-10-15', 'Empresa Delta', 'Cliente D', true, 4, 4, 4, 4),
+('412-739-LNW', '2024-10-14', '14:00:00', '2024-10-15', 'Empresa Delta', 'Cliente D', true, 4, 4, 4, 4, 4, 4),
 
-('712-939-VCD', '2024-10-15', '15:30:00', NULL, 'Empresa Épsilon', 'Cliente E', false, 5, 5, 5, 5);
+('712-939-VCD', '2024-10-15', '15:30:00', NULL, 'Empresa Épsilon', 'Cliente E', false, 5, 5, 5, 5, 5, 5);
 
 SELECT
-
-v.id_viagem, v.dia_partida, v.horario_partida, v.dia_chegada, v.remetente, v.destinatario, v.status_entregue,
-
-p.cep AS partida_cep,
-
-d.cep AS destino_cep,
-
-m.nome AS motorista_nome,
-
-veiculo.modelo AS veiculo_modelo
-
+    v.id_viagem,
+    v.dia_partida,
+    v.horario_partida,
+    v.dia_chegada,
+    v.remetente,
+    v.destinatario,
+    v.status_entregue,
+    p.cep AS partida_cep,
+    d.cep AS destino_cep,
+    m.nome AS motorista_nome,
+    veiculo.modelo AS veiculo_modelo,
+    tipo_carga.nome AS tipo_carga_nome,
+    empresa.nome AS empresa_nome
 FROM
-
-tbl_viagem v
-
+    tbl_viagem v
 INNER JOIN tbl_partida p ON v.id_partida = p.id
-
 INNER JOIN tbl_destino d ON v.id_destino = d.id
-
 INNER JOIN tbl_motorista m ON v.id_motorista = m.id
+INNER JOIN tbl_veiculo veiculo ON v.id_veiculo = veiculo.id
+INNER JOIN tbl_tipo_carga tipo_carga ON v.id_tipo_carga = tipo_carga.id
+INNER JOIN tbl_empresa empresa ON v.id_empresa = empresa.id
+ORDER BY
+    v.id DESC;
 
-INNER JOIN tbl_veiculo veiculo ON v.id_veiculo = veiculo.id;
 
 CREATE TABLE tbl_tipo_carga(
 
@@ -368,6 +379,7 @@ id_motorista int not null,
 id_empresa int not null,
 FOREIGN KEY(id_motorista) REFERENCES tbl_motorista(id) ON DELETE CASCADE,
 FOREIGN KEY(id_empresa) REFERENCES tbl_empresa(id) ON DELETE CASCADE
+
 
 );
 
