@@ -83,9 +83,23 @@ const insertMotoristaEquipe = async function(dadosMotorista){
            
        }
 }
+const selectIdEquipe = async function() {
+
+    try {
+
+    let sql = `select CAST(last_insert_id() as DECIMAL) as id from tbl_equipe limit 1`;
+
+    let empresaID = await prisma.$queryRawUnsafe(sql)
+     return empresaID
+    } catch (error) {
+        return false
+        
+    }   
+}
 module.exports = {
     selectEquipeById,
     selectEquipes,
     selectMotoristaEquipeById,
-    insertMotoristaEquipe
+    insertMotoristaEquipe,
+    selectIdEquipe
 }

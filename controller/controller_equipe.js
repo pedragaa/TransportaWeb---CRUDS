@@ -116,8 +116,66 @@ const getListarMotoristaEquipeById = async function (id){
 
 }
 
+const setInserirNovaEquipe = async (dadosEquipe, contentType) => {
+
+    
+
+    try{
+
+   
+    if(String(contentType).toLowerCase() == 'application/json'){
+    
+    // Cria a variável json
+    let resultdadosEquipe = {}
+
+    // Validação de campos obrigatórios e consistência de dados
+    if(              
+        dadosEquipe.id_motorista == ''                       || dadosEquipe.id_motorista == undefined           ||dadosEquipe.id_motorista.length > 1           || 
+        dadosEquipe.id_empresa == ''                  || dadosEquipe.id_empresa == undefined   ||dadosEquipe.id_empresa.length > 1   
+        
+    ){
+        
+        return message.ERROR_REQUIRED_FIELDS // 400 Campos obrigatórios / Incorretos
+     }else{
+        
+        // Encaminha os dados para o DAO, inserir no Banco de Dados
+        let novaEquipe = await equipeDAO.insertMotoristaEquipe(dadosEquipe);
+        
+        let idSelect = await equipeDAO.selectIdEquipe();
+        
+        dadosEquipe.id = Number (idSelect[0].id)
+        
+        // Validação de inserção de dados no banco de dados 
+        if(novaEquipe){
+
+           
+            // Cria o padrão de JSOn para o retorno dos dados criados no banco de dados
+            resultdadosEquipe.status = message.SUCESS_CREATED_ITEM.status;
+            resultdadosEquipe.status_code = message.SUCESS_CREATED_ITEM.status_code;
+            resultdadosEquipe.message = message.SUCESS_CREATED_ITEM.message;
+            resultdadosEquipe.equipe = dadosEquipe;
+            console.log(dadosEquipe)
+
+            return resultdadosEquipe;
+     // 201
+        } else{
+            return message.ERROR_INTERNAL_SERVER_DB; // 500 Erro na camada do DAO (Banco)
+            
+    
+         }
+       }
+    }else{
+        return message.ERROR_CONTENT_TYPE // 415 Erro no content type
+    }
+}catch(error){
+    console.log(error)
+    return message.ERROR_INTERNAL_SERVER // 500 Erro na camada de aplicação
+}
+}  
+
 module.exports = {
     getListarEquipe,
     getListarEquipeById,
-    getListarMotoristaEquipeById
+    getListarMotoristaEquipeById,
+    setInserirNovaEquipe
 }
