@@ -45,6 +45,40 @@ const getListarMotoristas = async function(){
 }
 }
 }
+const getListarMotoristasSemEquipe = async function(){
+    
+    let listaMotoristas;
+    // Cria uma variavel do tipo json
+    let motoristaJson = {};
+
+    if ((listaMotoristas)){
+        return listaMotoristas;
+    }else{
+    
+    // Chama a função do DAO para buscar os dados do banco de dados
+    let dadosMotorista = await motoristaDAO.selectDriversSemEquipe();
+
+    // Verifica se existem dados retornados do DAO
+    if(dadosMotorista){
+        if(dadosMotorista.length > 0){
+            if(dadosMotorista.length > 0){
+            
+        // Montando a estrutura do JSOn
+        motoristaJson.motoristas = dadosMotorista;
+        motoristaJson.quantidade = dadosMotorista.length;
+        motoristaJson.status_code = 200;
+        // Retorna o JSON montado
+        return motoristaJson; // 200
+        }else{
+            return message.ERROR_NOT_FOUND // 404
+        }
+        } else{
+            return message.ERROR_INTERNAL_SERVER_DB // 500
+
+    }
+}
+}
+}
 
 const setDeleteMotorista = async function(id){
     try {
@@ -299,5 +333,6 @@ module.exports = {
     setInserirNovoMotorista,
     setUpdateMotorista,
     loginMotorista,
-    setDeleteMotorista
+    setDeleteMotorista,
+    getListarMotoristasSemEquipe
 }

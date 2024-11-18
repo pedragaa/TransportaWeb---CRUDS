@@ -28,6 +28,28 @@ const selectAllDrivers = async function(){
         return false
 
 }
+const selectDriversSemEquipe = async function(){
+
+    // Script sql para listar todos os registros
+    let sql = `SELECT m.*
+        FROM tbl_motorista m
+        LEFT JOIN tbl_equipe e ON m.id = e.id_motorista
+        WHERE e.id_motorista IS NULL`;
+
+    // $queryRawUnsafe(sql)  = Encaminha apenas a variável
+    // $queryRaw('select * from tbl_atores) = Encaminha o script do banco 
+
+    // Executa o script no banco de dados e recebe o retorno dos dados da variavel rsMotoristas
+    let rsMotoristas = await prisma.$queryRawUnsafe(sql)
+     // Para usar await a função necessita ser async(async function)
+
+    // Tratamento de erro para retornar dados ou retornar false
+     if(rsMotoristas.length > 0)
+     return rsMotoristas;
+     else
+        return false
+
+}
 const selectDriversById = async function(id){
   try {
       // Realiza a busca do ator pelo ID
@@ -148,5 +170,6 @@ module.exports = {
     insertMotorista,
     updateMotorista,
     selectIdMotorista,
-    selectDriverByEmailESenha
+    selectDriverByEmailESenha,
+    selectDriversSemEquipe
 }

@@ -164,6 +164,20 @@ app.get('/v1/transportaweb/motoristas', cors(), async function(request,response,
         response.status()
     }
 });
+app.get('/v1/transportaweb/motoristasfree', cors(), async function(request,response,next){
+    
+    // Chama a função para retornar os dados do filme
+    let dadosMotorista = await controllerMotorista.getListarMotoristasSemEquipe();
+
+    // Validação para verificar se existem dados
+    if(dadosMotorista){
+        response.json(dadosMotorista)
+        response.status(200);
+    }else{
+        response.json({message: 'Nenhum registro encontrado'})
+        response.status()
+    }
+});
 app.get('/v1/transportaweb/motoristas/filtro', cors(), async function (request, response, next) {
     let nomeMotorista = request.query.nome;
 
