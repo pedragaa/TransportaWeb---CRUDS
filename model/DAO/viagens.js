@@ -13,6 +13,7 @@ const selectAllViagens = async function(){
 
     let sql = `
     SELECT
+    v.id,
     v.id_viagem,
     v.dia_partida,
     v.horario_partida,
@@ -69,6 +70,7 @@ INNER JOIN tbl_veiculo veiculo ON v.id_veiculo = veiculo.id;`;
 const selectViagensByID = async function(id){
   try {
       let sql = `SELECT
+      v.id,
       v.id_viagem,
       v.dia_partida,
       v.horario_partida,

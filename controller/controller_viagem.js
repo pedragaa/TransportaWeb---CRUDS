@@ -56,7 +56,7 @@ const getListarViagemById = async function (id){
     let viagemJson = {};
 
     // Validação para ID vazio, indefinido ou não numérico
-    if (idViagem == '' || idViagem == undefined || isNaN(idViagem)){
+    if (idViagem == '' || idViagem == undefined){
         return message.ERROR_INVALID_ID;
     }else{
 
