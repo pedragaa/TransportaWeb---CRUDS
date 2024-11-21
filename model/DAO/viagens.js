@@ -115,8 +115,10 @@ const selectViagensByIdEmpresa = async function(id){
   
 
 const selectViagemByNome = async function (id_viagem) {
+  
     try {
-        let sql = `  v.id,
+
+        let sql = `select
       v.id_viagem,
       v.dia_partida,
       v.horario_partida,
@@ -138,8 +140,9 @@ const selectViagemByNome = async function (id_viagem) {
   INNER JOIN tbl_veiculo veiculo ON v.id_veiculo = veiculo.id
   INNER JOIN tbl_tipo_carga tipo_carga ON v.id_tipo_carga = tipo_carga.id
   INNER JOIN tbl_empresa empresa ON v.id_empresa = empresa.id
-  WHERE
-      v.id_viagem = ${id_viagem}"`
+  WHERE id_viagem LIKE "${id_viagem}";`;
+
+
         let rsViagrn = await prisma.$queryRawUnsafe(sql)
         return rsViagrn
     } catch (error) {

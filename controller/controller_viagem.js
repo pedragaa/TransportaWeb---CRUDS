@@ -124,7 +124,7 @@ const getBuscarViagemByNome = async function (id_viagem){
         
         let idviagem = id_viagem;
         let viagemJson = {}
-        if (idviagem == '' ||idviagem==undefined)
+        if (idviagem == '' ||idviagem==undefined || idviagem == isNaN)
         return message.ERROR_INVALID_ID
         else {
             let dadosViagem = await viagemDAO.selectViagemByNome(idviagem)
@@ -140,6 +140,7 @@ const getBuscarViagemByNome = async function (id_viagem){
             return message.ERROR_INTERNAL_SERVER_DB
         }
     } catch (error) {
+        console.log(error)
         return message.ERROR_INTERNAL_SERVER
     }
 }
