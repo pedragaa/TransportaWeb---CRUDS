@@ -115,6 +115,7 @@ const selectViagensByIdEmpresa = async function(id){
   
 
 const selectViagemByNome = async function (id_viagem) {
+  console.log("id recebido:", id_viagem);
   
     try {
 
