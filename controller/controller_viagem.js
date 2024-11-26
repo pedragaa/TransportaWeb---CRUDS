@@ -146,10 +146,12 @@ const getBuscarViagemByNome = async function (id_viagem){
 }
 const setInserirViagem = async (dadosViagem, contentType) => {
     try {
+        // Verifica se o contentType é 'application/json'
         if (String(contentType).toLowerCase() == 'application/json') {
             
-            // Converte strings vazias ou 'null' para null
+            // Converte strings vazias ou 'null' para null no campo id_motorista
             dadosViagem.id_motorista = (dadosViagem.id_motorista === '' || dadosViagem.id_motorista === 'null') ? null : dadosViagem.id_motorista;
+
 
             let resultdadosViagem = {};
 
@@ -181,11 +183,13 @@ const setInserirViagem = async (dadosViagem, contentType) => {
                 }
 
                 if (dadosValidated) {
+                    // Inserção de viagem no banco de dados
                     let novoMotorista = await viagemDAO.insertViagem(dadosViagem);
                     let idSelect = await viagemDAO.selectIDViagem();
 
                     dadosViagem.id = Number(idSelect[0].id);
 
+                    // Verifica se a inserção foi bem-sucedida
                     if (novoMotorista) {
                         resultdadosViagem.status = message.SUCESS_CREATED_ITEM.status;
                         resultdadosViagem.status_code = message.SUCESS_CREATED_ITEM.status_code;

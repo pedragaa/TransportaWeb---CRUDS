@@ -180,10 +180,29 @@ const deleteViagemByID = async function(id){
 }
 const insertViagem =  async function(dadosViagem) {
     try {
+        // Verifique se o valor de id_motorista é uma string vazia ou 'null' e atribua o valor null real
+        dadosViagem.id_motorista = (dadosViagem.id_motorista === '' || dadosViagem.id_motorista === 'null') ? null : dadosViagem.id_motorista;
 
-     let sql  = `insert into tbl_viagem (id_viagem, dia_partida, horario_partida, dia_chegada, remetente, destinatario, status_entregue, id_partida, id_destino, id_motorista, id_veiculo, id_tipo_carga, id_empresa) values ('${dadosViagem.id_viagem}', '${dadosViagem.dia_partida}', '${dadosViagem.horario_partida}', '${dadosViagem.dia_chegada}', '${dadosViagem.remetente}', '${dadosViagem.destinatario}', '${dadosViagem.status_entregue}', '${dadosViagem.id_partida}', '${dadosViagem.id_destino}', '${dadosViagem.id_motorista}', '${dadosViagem.id_veiculo}', '${dadosViagem.id_tipo_carga}', '${dadosViagem.id_empresa}' )`
-        // Executa o script SQL no banco de dados | Devemos usar execute e não query!
-        // Execute deve ser utilizado para insert, update e delete, onde o banco não devolve dados
+        // Construção da query SQL com segurança para enviar o valor null corretamente
+        let sql = `
+        INSERT INTO tbl_viagem (id_viagem, dia_partida, horario_partida, dia_chegada, remetente, destinatario, 
+        status_entregue, id_partida, id_destino, id_motorista, id_veiculo, id_tipo_carga, id_empresa)
+        VALUES (
+        '${dadosViagem.id_viagem}', 
+        '${dadosViagem.dia_partida}', 
+        '${dadosViagem.horario_partida}', 
+        '${dadosViagem.dia_chegada}', 
+        '${dadosViagem.remetente}', 
+        '${dadosViagem.destinatario}', 
+        '${dadosViagem.status_entregue}', 
+        '${dadosViagem.id_partida}', 
+        '${dadosViagem.id_destino}', 
+        ${dadosViagem.id_motorista === null ? 'NULL' : dadosViagem.id_motorista}, 
+        '${dadosViagem.id_veiculo}', 
+        '${dadosViagem.id_tipo_carga}', 
+        '${dadosViagem.id_empresa}'
+    )`;
+        
         let result = await prisma.$executeRawUnsafe(sql);
 
         // Validação para verificar se o insert funcionou no banco de dados
