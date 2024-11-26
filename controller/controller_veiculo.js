@@ -28,7 +28,7 @@ const getListarVeiculos = async function(){
             if(dadosVeiculo.length > 0){
             
         // Montando a estrutura do JSOn
-        veiculoJson.empresas = dadosVeiculo;
+        veiculoJson.veiculos = dadosVeiculo;
         veiculoJson.quantidade = dadosVeiculo.length;
         veiculoJson.status_code = 200;
         // Retorna o JSON montado
@@ -103,8 +103,52 @@ const getListarveiculoBYID = async function (id){
 
 
 }
+const setInserirVeiculo = async (dadosVeiculo, contentType) => {
+    try {
+        if (String(contentType).toLowerCase() == 'application/json') {
+        
+            let resultdadosVeiculo = {};
+
+            // Validação de campos obrigatórios e consistência de dados
+            if (
+                dadosVeiculo.placa == '' || dadosVeiculo.placa == undefined || dadosVeiculo.placa.length > 9 ||
+                dadosVeiculo.modelo == '' || dadosVeiculo.modelo == undefined || dadosVeiculo.modelo.length > 50 ||
+                dadosVeiculo.ano == '' || dadosVeiculo.ano == undefined || dadosVeiculo.ano.length > 4 ||
+                dadosVeiculo.tipo == '' || dadosVeiculo.tipo == undefined || dadosVeiculo.tipo.length > 30 ||
+                dadosVeiculo.capacidade_carga == '' || dadosVeiculo.capacidade_carga == undefined || dadosVeiculo.capacidade_carga.length > 12 
+
+            ) {
+                console.log(dadosVeiculo);
+                return message.ERROR_REQUIRED_FIELDS;
+            } else {
+    
+                    let novoVeiculo = await veiculoDAO.insertVeiculo(dadosVeiculo);
+                    // let idSelect = await viagemDAO.selectIDViagem();
+
+                    // dadosVeiculo.id = Number(idSelect[0].id);
+
+                    if (novoVeiculo) {
+                        resultdadosVeiculo.status = message.SUCESS_CREATED_ITEM.status;
+                        resultdadosVeiculo.status_code = message.SUCESS_CREATED_ITEM.status_code;
+                        resultdadosVeiculo.message = message.SUCESS_CREATED_ITEM.message;
+                        resultdadosVeiculo.veiculo = dadosVeiculo;
+
+                        return resultdadosVeiculo;
+                    } else {
+                        return message.ERROR_INTERNAL_SERVER_DB;
+                    }
+                }
+            }
+     
+        
+    } catch (error) {
+        console.log(error);
+        return message.ERROR_INTERNAL_SERVER;
+    }
+};
 module.exports = {
     getBuscarVeiculoModelo,
     getListarVeiculos,
-    getListarveiculoBYID
+    getListarveiculoBYID,
+    setInserirVeiculo
 }

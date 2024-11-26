@@ -52,9 +52,31 @@ const selectVeiculoByModelo = async function (modelo) {
         return false
     }
 }
+const insertVeiculo =  async function(dadosVeiculo) {
+    
+    try {
 
+     let sql  = `insert into tbl_veiculo( placa, modelo, ano, tipo, capacidade_carga) values ('${dadosVeiculo.placa}', '${dadosVeiculo.modelo}', '${dadosVeiculo.ano}', '${dadosVeiculo.tipo}','${dadosVeiculo.capacidade_carga}');`
+            
+        // Executa o script SQL no banco de dados | Devemos usar execute e não query!
+        // Execute deve ser utilizado para insert, update e delete, onde o banco não devolve dados
+        let result = await prisma.$executeRawUnsafe(sql);
+
+        // Validação para verificar se o insert funcionou no banco de dados
+        if(result )
+            return true;
+        else
+            return false;
+
+    } catch (error) {
+        console.log(error)
+        return false;
+        
+    }
+}
 module.exports = {
     selectAllVeiculo,
     selectVeiculoByModelo,
-    selectVeiculosByID
+    selectVeiculosByID,
+    insertVeiculo
 }
