@@ -45,6 +45,8 @@ const bodyParserJSON = bodyParser.json();
     const controllerDestino = require('./controller/controller_destino.js')
     const controllerPartida = require('./controller/controller_partida.js')
     const controllerEquipe = require('./controller/controller_equipe.js')
+    const controllerNotificacao = require('./controller/controller_notificacao.js')
+
 
 // ************************************************************************************************* //
 //Função para configurar as permissões do cors
@@ -531,6 +533,60 @@ app.get('/v1/transportaweb/partida/:id', cors(), async function(request, respons
     response.json(dadosPartida);
    
 });
+/*******************************************************************/
+//                           Notoficacao                            //
+/*******************************************************************/
+
+
+app.get('/v1/transportaweb/notificacaoempresa/:id', cors(), async function(request,response,next){
+    
+    let idNotificacao = request.params.id;
+
+    // Chama a função para retornar os dados do filme
+    let dadosNotificacao = await controllerNotificacao.getListsarNotificacaoEmpresa(idNotificacao);
+
+    // Validação para verificar se existem dados
+    if(dadosNotificacao){
+        response.json(dadosNotificacao)
+        response.status(200);
+    }else{
+        response.json({message: 'Nenhum registro encontrado'})
+        response.status()
+    }
+});
+
+
+app.get('/v1/transportaweb/notificacaomotorista/:id', cors(), async function(request,response,next){
+    
+    let idNotificacao = request.params.id;
+    // Chama a função para retornar os dados do filme
+    let dadosNotificacao = await controllerNotificacao.getListsarNotificacaoMotorista(idNotificacao);
+
+    // Validação para verificar se existem dados
+    if(dadosNotificacao){
+        response.json(dadosNotificacao)
+        response.status(200);
+    }else{
+        response.json({message: 'Nenhum registro encontrado'})
+        response.status()
+    }
+});
+
+
+app.post('/v1/transportaweb/newnotificacao', cors(), bodyParserJSON, async function(request, response,next){
+
+    // Recebe o content-type da requisição (API deve receber application/json )
+   let contentType = request.headers['content-type'];
+
+   // Recebe os dados encaminhados na requisição do body (JSON)
+   let dadosBody = request.body;
+   
+   // Encaminha os dados da requisição para a controller enviar para o banco de dados
+   let resultDados = await controllerNotificacao.setInserirNotificacao(dadosBody, contentType);
+
+   response.status(resultDados.status_code);
+   response.json(resultDados);
+})
 
 app.listen(8080, function(){
     console.log('Tá funcionando, testa aí');
