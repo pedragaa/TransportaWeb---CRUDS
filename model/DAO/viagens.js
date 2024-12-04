@@ -71,28 +71,28 @@ INNER JOIN tbl_veiculo veiculo ON v.id_veiculo = veiculo.id;`;
 const selectViagensByID = async function(id){
   try {
       let sql = `SELECT
-      v.id,
-      v.id_viagem,
-      v.dia_partida,
-      v.horario_partida,
-      v.dia_chegada,
-      v.remetente,
-      v.destinatario,
-      v.status_entregue,
-      p.cep AS partida_cep,
-      d.cep AS destino_cep,
-      m.nome AS motorista_nome,
-      veiculo.modelo AS veiculo_modelo,
-      tipo_carga.nome AS tipo_carga_nome,
-      empresa.nome AS empresa_nome
-  FROM
-      tbl_viagem v
-  INNER JOIN tbl_partida p ON v.id_partida = p.id
-  INNER JOIN tbl_destino d ON v.id_destino = d.id
-  INNER JOIN tbl_motorista m ON v.id_motorista = m.id
-  INNER JOIN tbl_veiculo veiculo ON v.id_veiculo = veiculo.id
-  INNER JOIN tbl_tipo_carga tipo_carga ON v.id_tipo_carga = tipo_carga.id
-  INNER JOIN tbl_empresa empresa ON v.id_empresa = empresa.id
+    v.id,
+    v.id_viagem,
+    v.dia_partida,
+    v.horario_partida,
+    v.dia_chegada,
+    v.remetente,
+    v.destinatario,
+    v.status_entregue,
+    p.cep AS partida_cep,
+    d.cep AS destino_cep,
+    m.nome AS motorista_nome,
+    veiculo.modelo AS veiculo_modelo,
+    tipo_carga.nome AS tipo_carga_nome,
+    empresa.nome AS empresa_nome
+FROM
+    tbl_viagem v
+INNER JOIN tbl_partida p ON v.id_partida = p.id
+INNER JOIN tbl_destino d ON v.id_destino = d.id
+LEFT JOIN tbl_motorista m ON v.id_motorista = m.id -- Alterado para LEFT JOIN
+INNER JOIN tbl_veiculo veiculo ON v.id_veiculo = veiculo.id
+INNER JOIN tbl_tipo_carga tipo_carga ON v.id_tipo_carga = tipo_carga.id
+INNER JOIN tbl_empresa empresa ON v.id_empresa = empresa.id
   WHERE
       v.id = ${id}
   `;
@@ -131,28 +131,29 @@ const selectViagemByNome = async function (id_viagem) {
   
     try {
 
-        let sql = `select
-      v.id_viagem,
-      v.dia_partida,
-      v.horario_partida,
-      v.dia_chegada,
-      v.remetente,
-      v.destinatario,
-      v.status_entregue,
-      p.cep AS partida_cep,
-      d.cep AS destino_cep,
-      m.nome AS motorista_nome,
-      veiculo.modelo AS veiculo_modelo,
-      tipo_carga.nome AS tipo_carga_nome,
-      empresa.nome AS empresa_nome
-  FROM
-      tbl_viagem v
-  INNER JOIN tbl_partida p ON v.id_partida = p.id
-  INNER JOIN tbl_destino d ON v.id_destino = d.id
-  INNER JOIN tbl_motorista m ON v.id_motorista = m.id
-  INNER JOIN tbl_veiculo veiculo ON v.id_veiculo = veiculo.id
-  INNER JOIN tbl_tipo_carga tipo_carga ON v.id_tipo_carga = tipo_carga.id
-  INNER JOIN tbl_empresa empresa ON v.id_empresa = empresa.id
+        let sql = `SELECT
+    v.id,
+    v.id_viagem,
+    v.dia_partida,
+    v.horario_partida,
+    v.dia_chegada,
+    v.remetente,
+    v.destinatario,
+    v.status_entregue,
+    p.cep AS partida_cep,
+    d.cep AS destino_cep,
+    m.nome AS motorista_nome,
+    veiculo.modelo AS veiculo_modelo,
+    tipo_carga.nome AS tipo_carga_nome,
+    empresa.nome AS empresa_nome
+FROM
+    tbl_viagem v
+INNER JOIN tbl_partida p ON v.id_partida = p.id
+INNER JOIN tbl_destino d ON v.id_destino = d.id
+LEFT JOIN tbl_motorista m ON v.id_motorista = m.id -- Alterado para LEFT JOIN
+INNER JOIN tbl_veiculo veiculo ON v.id_veiculo = veiculo.id
+INNER JOIN tbl_tipo_carga tipo_carga ON v.id_tipo_carga = tipo_carga.id
+INNER JOIN tbl_empresa empresa ON v.id_empresa = empresa.id
   WHERE id_viagem LIKE "${id_viagem}";`;
 
 
