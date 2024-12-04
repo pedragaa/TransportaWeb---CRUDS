@@ -341,6 +341,18 @@ app.get('/v1/transportaweb/empresaviagem/:id', cors(), async function(request, r
    
 });
 
+app.get('/v1/transportaweb/motoristaviagem/:id', cors(), async function(request, response, next){
+    // Recebe o id da requisição 
+    let idViagem = request.params.id;
+ 
+    let dadosViagem = await controllerViagem.getListarViagemByIdMotorista(idViagem);
+
+     response.status(dadosViagem.status_code);
+    response.json(dadosViagem);
+   
+});
+
+
 app.get('/v1/transportaweb/viagens/filtro', cors(), async function (request, response, next) {
 
     let idviagem = request.query.id_viagem;
