@@ -12,7 +12,8 @@ const prisma = new PrismaClient();
 const selectAllViagens = async function(){
 
     let sql = `
-    SELECT
+   
+SELECT
     v.id,
     v.id_viagem,
     v.dia_partida,
@@ -31,7 +32,7 @@ FROM
     tbl_viagem v
 INNER JOIN tbl_partida p ON v.id_partida = p.id
 INNER JOIN tbl_destino d ON v.id_destino = d.id
-INNER JOIN tbl_motorista m ON v.id_motorista = m.id
+LEFT JOIN tbl_motorista m ON v.id_motorista = m.id -- Alterado para LEFT JOIN
 INNER JOIN tbl_veiculo veiculo ON v.id_veiculo = veiculo.id
 INNER JOIN tbl_tipo_carga tipo_carga ON v.id_tipo_carga = tipo_carga.id
 INNER JOIN tbl_empresa empresa ON v.id_empresa = empresa.id
@@ -197,7 +198,7 @@ const insertViagem =  async function(dadosViagem) {
         '${dadosViagem.status_entregue}', 
         '${dadosViagem.id_partida}', 
         '${dadosViagem.id_destino}', 
-        ${dadosViagem.id_motorista === null ? 'NULL' : dadosViagem.id_motorista}, 
+        ${dadosViagem.id_motorista}, 
         '${dadosViagem.id_veiculo}', 
         '${dadosViagem.id_tipo_carga}', 
         '${dadosViagem.id_empresa}'

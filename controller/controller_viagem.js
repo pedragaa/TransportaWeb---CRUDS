@@ -181,6 +181,7 @@ const setInserirViagem = async (dadosViagem, contentType) => {
                 } else {
                     dadosValidated = true;
                 }
+                
 
                 if (dadosValidated) {
                     // Inserção de viagem no banco de dados
