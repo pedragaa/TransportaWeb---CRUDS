@@ -383,14 +383,16 @@ app.get('/v1/transportaweb/motorista_avaliacoes', cors(), async function(request
     }
 });
 
+/*******************************************
+ * Equipess
+ *******************************************/ 
 
-
-app.get('/v1/transportaweb/equipe/:id', cors(), async function(request, response, next){
+app.get('/v1/transportaweb/equipes', cors(), async function(request, response, next){
     // Recebe o id da requisição 
     let idEquipe = request.params.id;
 
  
-    let dadosViagem = await controllerEquipe.getListarEquipeById(idEquipe);
+    let dadosViagem = await controllerEquipe.getListarEquipe(idEquipe);
 
      response.status(dadosViagem.status_code);
     response.json(dadosViagem);
@@ -407,6 +409,22 @@ app.get('/v1/transportaweb/motoristaequipe/:id', cors(), async function(request,
     response.json(dadosEquipe);
    
 });
+
+
+app.post('/v1/transportaweb/newequipe', cors(), bodyParserJSON, async function(request, response,next){
+
+    // Recebe o content-type da requisição (API deve receber application/json )
+   let contentType = request.headers['content-type'];
+
+   // Recebe os dados encaminhados na requisição do body (JSON)
+   let dadosBody = request.body;
+   
+   // Encaminha os dados da requisição para a controller enviar para o banco de dados
+   let resultDados = await controllerEquipe.setInserirNovaEquipe(dadosBody, contentType);
+
+   response.status(resultDados.status_code);
+   response.json(resultDados);
+})
 
 /*******************************************
  * Cargas
