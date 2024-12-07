@@ -49,5 +49,6 @@ const selectDestinoById = async function(id){
         return false
 }
 module.exports = {
-    selectDestinos,selectDestinoById
+    selectDestinos,
+    selectDestinoById
 }

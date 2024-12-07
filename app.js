@@ -563,6 +563,21 @@ app.get('/v1/transportaweb/partida/:id', cors(), async function(request, respons
     response.json(dadosPartida);
    
 });
+
+app.post('/v1/transportaweb/newpartida', cors(), bodyParserJSON, async function(request, response,next){
+
+    // Recebe o content-type da requisição (API deve receber application/json )
+   let contentType = request.headers['content-type'];
+
+   // Recebe os dados encaminhados na requisição do body (JSON)
+   let dadosBody = request.body;
+   
+   // Encaminha os dados da requisição para a controller enviar para o banco de dados
+   let resultDados = await controllerPartida.setInserirPartida(dadosBody, contentType);
+
+   response.status(resultDados.status_code);
+   response.json(resultDados);
+})
 /*******************************************************************/
 //                           Notoficacao                            //
 /*******************************************************************/
