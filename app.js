@@ -387,6 +387,37 @@ app.get('/v1/transportaweb/motorista_avaliacoes', cors(), async function(request
  * Equipess
  *******************************************/ 
 
+
+app.delete('/v1/transportaweb/deleteequipe', cors(), bodyParserJSON, async function(request, response, next) {
+    try {
+        // Verificar o tipo de conteúdo da requisição
+        let contentType = request.headers['content-type'];
+        let dadosBody = request.body;
+
+        // Chamar a função para excluir o motorista da equipe
+        let resultDados = await setExcluirMotoristaEquipe(dadosBody, contentType);
+
+        // Responder com o status e mensagem apropriados
+        response.status(resultDados.status_code);
+        response.json(resultDados);
+        
+    } catch (error) {
+        console.error('Erro ao processar requisição /v1/transportaweb/deleteequipe:', error);
+        response.status(500).json({
+            status: false,
+            status_code: 500,
+            message: 'Erro interno no servidor.'
+        });
+    }
+});
+
+
+
+
+
+
+
+
 app.get('/v1/transportaweb/equipes', cors(), async function(request, response, next){
     // Recebe o id da requisição 
     let idEquipe = request.params.id;

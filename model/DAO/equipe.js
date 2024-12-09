@@ -61,28 +61,33 @@ WHERE te.id_empresa = ${id}`;
         }
 }
 
-const insertMotoristaEquipe = async function(dadosMotorista){
-
+const insertMotoristaEquipe = async function(dadosMotorista) {
     try {
+        // Verificar se todos os dados necessários estão presentes
+        if (!dadosMotorista.id_motorista || !dadosMotorista.id_empresa) {
+            throw new Error('Campos obrigatórios ausentes ou incorretos.');
+        }
 
-        let sql  = `insert into tbl_equipe(id_motorista, id_empresa) values ('${dadosMotorista.id_motorista}', '${dadosMotorista.id_empresa}')`
-               
-           // Executa o script SQL no banco de dados | Devemos usar execute e não query!
-           // Execute deve ser utilizado para insert, update e delete, onde o banco não devolve dados
-           let result = await prisma.$executeRawUnsafe(sql);
-   
-           // Validação para verificar se o insert funcionou no banco de dados
-           if(result )
-               return true;
-           else
-               return false;
-   
-       } catch (error) {
-           console.log(error)
-           return false;
-           
-       }
-}
+        // Construir a query de inserção
+        let sql = `INSERT INTO tbl_equipe (id_motorista, id_empresa) VALUES ('${dadosMotorista.id_motorista}', '${dadosMotorista.id_empresa}')`;
+
+        // Executar a query no banco de dados
+        let result = await prisma.$executeRawUnsafe(sql);
+
+        // Validar se o resultado da inserção foi bem-sucedido
+        if (result) {
+            return true;
+        } else {
+            throw new Error('Falha ao inserir no banco de dados.');
+        }
+
+    } catch (error) {
+        console.error('Erro ao inserir motorista na equipe:', error);
+        throw new Error('Erro interno ao inserir motorista na equipe.');
+    }
+};
+
+
 const selectIdEquipe = async function() {
 
     try {
@@ -96,10 +101,46 @@ const selectIdEquipe = async function() {
         
     }   
 }
+
+
+const deleteMotoristaEquipe = async function(id_motorista, id_empresa) {
+    try {
+        // Verificar se os parâmetros necessários foram fornecidos
+        if (!id_motorista || !id_empresa) {
+            throw new Error('Campos obrigatórios ausentes ou incorretos.');
+        }
+
+        // Construir a query de DELETE
+        let sql = `DELETE FROM tbl_equipe WHERE id_motorista = '${id_motorista}' AND id_empresa = '${id_empresa}'`;
+
+        // Executar a query no banco de dados
+        let result = await prisma.$executeRawUnsafe(sql);
+
+        // Verificar se a exclusão foi bem-sucedida
+        if (result) {
+            return true;
+        } else {
+            throw new Error('Falha ao excluir no banco de dados.');
+        }
+
+    } catch (error) {
+        console.error('Erro ao excluir motorista da equipe:', error);
+        throw new Error('Erro interno ao excluir motorista da equipe.');
+    }
+};
+
+
+
+
+
+
+
+
 module.exports = {
     selectEquipeById,
     selectEquipes,
     selectMotoristaEquipeById,
     insertMotoristaEquipe,
-    selectIdEquipe
+    selectIdEquipe,
+    deleteMotoristaEquipe
 }
