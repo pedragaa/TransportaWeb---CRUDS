@@ -80,6 +80,9 @@ const getListarEquipeById = async function (id){
 
 
 }
+
+
+
 const getListarMotoristaEquipeById = async function (id){
    
     // Recebe o id do ator
@@ -116,6 +119,8 @@ const getListarMotoristaEquipeById = async function (id){
 
 }
 
+
+
 const setInserirNovaEquipe = async (dadosEquipe, contentType) => {
 
     
@@ -130,8 +135,8 @@ const setInserirNovaEquipe = async (dadosEquipe, contentType) => {
 
     // Validação de campos obrigatórios e consistência de dados
     if(              
-        dadosEquipe.id_motorista == ''                       || dadosEquipe.id_motorista == undefined           ||dadosEquipe.id_motorista.length > 1           || 
-        dadosEquipe.id_empresa == ''                  || dadosEquipe.id_empresa == undefined   ||dadosEquipe.id_empresa.length > 1   
+        dadosEquipe.id_motorista == ''                       || dadosEquipe.id_motorista == undefined           || !dadosEquipe.id_motorista         || 
+        dadosEquipe.id_empresa == ''                  || dadosEquipe.id_empresa == undefined   || !dadosEquipe.id_empresa
         
     ){
         
@@ -173,9 +178,64 @@ const setInserirNovaEquipe = async (dadosEquipe, contentType) => {
 }
 }  
 
+const setExcluirMotoristaEquipe = async (dadosEquipe, contentType) => {
+    try {
+        // Verificar se o content-type da requisição é JSON
+        if (String(contentType).toLowerCase() !== 'application/json') {
+            return {
+                status: false,
+                status_code: 415,
+                message: 'Tipo de conteúdo não suportado. Use application/json.'
+            };
+        }
+
+        // Validar campos obrigatórios
+        if (  dadosEquipe.id_motorista == ''                       || dadosEquipe.id_motorista == undefined           || !dadosEquipe.id_motorista         || 
+            dadosEquipe.id_empresa == ''                  || dadosEquipe.id_empresa == undefined   || !dadosEquipe.id_empresa ) {
+            return {
+                status: false,
+                status_code: 400,
+                message: 'Campos obrigatórios ausentes: id_motorista e id_empresa.'
+            };
+        }
+
+        // Tentar excluir os dados no banco
+        let motoristaExcluido = await deleteMotoristaEquipe(dadosEquipe.id_motorista, dadosEquipe.id_empresa);
+
+        if (!motoristaExcluido) {
+            return {
+                status: false,
+                status_code: 500,
+                message: 'Erro ao excluir motorista da equipe.'
+            };
+        }
+
+        // Retornar sucesso se a exclusão for bem-sucedida
+        return {
+            status: true,
+            status_code: 200,
+            message: 'Motorista excluído da equipe com sucesso.'
+        };
+
+    } catch (error) {
+        console.error('Erro ao excluir motorista da equipe:', error);
+        return {
+            status: false,
+            status_code: 500,
+            message: 'Erro interno ao processar a requisição.'
+        };
+    }
+};
+
+
+
+
+
+
 module.exports = {
     getListarEquipe,
     getListarEquipeById,
     getListarMotoristaEquipeById,
-    setInserirNovaEquipe
+    setInserirNovaEquipe,
+    setExcluirMotoristaEquipe
 }
